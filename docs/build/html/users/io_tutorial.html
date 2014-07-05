@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Saving and Loading HoloPy Objects &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="tutorials.html" />
+    <link rel="next" title="Concepts" href="concepts.html" />
+    <link rel="prev" title="Scattering from Arbitrary Structures with DDA" href="dda_tutorial.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="concepts.html" title="Concepts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dda_tutorial.html" title="Scattering from Arbitrary Structures with DDA"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="tutorials.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Saving and Loading HoloPy Objects</a><ul>
+<li><a class="reference internal" href="#saving-metadata">Saving Metadata</a></li>
+<li><a class="reference internal" href="#saving-images">Saving Images</a></li>
+<li><a class="reference internal" href="#saving-fit-results">Saving Fit Results</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dda_tutorial.html"
+                        title="previous chapter">Scattering from Arbitrary Structures with DDA</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="concepts.html"
+                        title="next chapter">Concepts</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/users/io_tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="saving-and-loading-holopy-objects">
+<span id="yaml-ref"></span><h1>Saving and Loading HoloPy Objects<a class="headerlink" href="#saving-and-loading-holopy-objects" title="Permalink to this headline">¶</a></h1>
+<p>HoloPy can save and load all of its objects using <a class="reference external" href="http://www.yaml.org/">YAML</a> files.  These are designed to be both human-
+and computer-readable. This makes it easy to store results of a
+calculation or fit.</p>
+<div class="section" id="saving-metadata">
+<h2>Saving Metadata<a class="headerlink" href="#saving-metadata" title="Permalink to this headline">¶</a></h2>
+<p>HoloPy yaml files provide a handy way of dealing with metadata.  For
+example, you can save an optics object for future use with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">holopy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="n">optics</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Optics</span><span class="p">(</span><span class="o">.</span><span class="mi">66</span><span class="p">,</span> <span class="mf">1.33</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;optics.yaml&#39;</span><span class="p">,</span> <span class="n">optics</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>optics.yaml is a plain text file that will look something like the
+following (though yours will not contain the explanatory comments
+beginning with #):</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="kt">!Optics</span>
+<span class="l-Scalar-Plain">wavelen</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.66</span>     <span class="c1"># Wavelength of light (in vacuum) used in creating holograms</span>
+<span class="l-Scalar-Plain">index</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.33</span>       <span class="c1"># Index of medium</span>
+<span class="l-Scalar-Plain">polarization</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">1.0</span><span class="p-Indicator">,</span> <span class="nv">0.0</span><span class="p-Indicator">]</span>
+<span class="l-Scalar-Plain">divergence</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.0</span>
+</pre></div>
+</div>
+<p>You can also simply write this file by hand.  Having a file containing
+your optics metadata is convenient since you don&#8217;t need to enter in
+your metadata in every python script you run to analyze or calcuate
+data.  You can simply create an <a class="reference internal" href="../reference/holopy.core.metadata.html#holopy.core.metadata.Optics" title="holopy.core.metadata.Optics"><tt class="xref py py-class docutils literal"><span class="pre">Optics</span></tt></a> object just by loading
+the file</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">optics</span> <span class="o">=</span> <span class="n">holopy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;optics.yaml&#39;</span><span class="p">)</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">holopy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;image.tif&#39;</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>  <span class="n">optics</span> <span class="o">=</span> <span class="n">optics</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In fact, it&#8217;s even easier than that.  <tt class="xref py py-func docutils literal"><span class="pre">holopy.load</span></tt> will accept the filename of a metadata yaml
+file as the argument for the optics parameter and automatically load
+the yaml file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">holo</span> <span class="o">=</span> <span class="n">holopy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;image.tif&#39;</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="n">optics</span><span class="o">=</span><span class="s">&#39;optics.yaml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is handy if you have a lot of data that was all created using the
+same optical train.</p>
+</div>
+<div class="section" id="saving-images">
+<h2>Saving Images<a class="headerlink" href="#saving-images" title="Permalink to this headline">¶</a></h2>
+<p>If you have a hologram called <tt class="docutils literal"><span class="pre">holo</span></tt> from a calculation or preprocessing
+that you want to save, you can use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">holopy</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;holo.yaml&#39;</span><span class="p">,</span> <span class="n">holo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will save your hologram, including all metadata associated with
+it such as its optics and spacing (pixel size), to the file
+<tt class="docutils literal"><span class="pre">holo.yaml</span></tt>.  (Opening this file with a text editor, however, may be
+difficult; see <a class="footnote-reference" href="#marray-yaml" id="id1">[1]</a>) To reload a saved hologram, simply
+type</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">holo</span> <span class="o">=</span> <span class="n">holopy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;holo.yaml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You do not have to specify optics or spacing for your hologram when
+loading it from a saved hologram, as all of this information is already
+specified in the yaml file.</p>
+</div>
+<div class="section" id="saving-fit-results">
+<h2>Saving Fit Results<a class="headerlink" href="#saving-fit-results" title="Permalink to this headline">¶</a></h2>
+<p>In the <a class="reference internal" href="fit_tutorial.html#fit-tutorial"><em>fit tutorial</em></a> you saved the result of a fit with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">hp</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;result.yaml&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you examine that file, it will contain things like:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="kt">!FitResult</span>
+<span class="l-Scalar-Plain">parameters</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span><span class="nv">alpha</span><span class="p-Indicator">:</span> <span class="nv">1.0</span><span class="p-Indicator">,</span> <span class="s">&#39;center[0]&#39;</span><span class="p-Indicator">:</span> <span class="nv">5.000000000000003</span><span class="p-Indicator">,</span> <span class="s">&#39;center[1]&#39;</span><span class="p-Indicator">:</span> <span class="nv">5.000000000000004</span><span class="p-Indicator">,</span>
+  <span class="s">&#39;center[2]&#39;</span><span class="p-Indicator">:</span> <span class="nv">10.299999999999969</span><span class="p-Indicator">}</span>
+<span class="l-Scalar-Plain">scatterer</span><span class="p-Indicator">:</span> <span class="kt">!Sphere</span>
+  <span class="l-Scalar-Plain">n</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.58</span>
+  <span class="l-Scalar-Plain">r</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.5</span>
+  <span class="l-Scalar-Plain">center</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">5.000000000000003</span><span class="p-Indicator">,</span> <span class="nv">5.000000000000004</span><span class="p-Indicator">,</span> <span class="nv">10.299999999999969</span><span class="p-Indicator">]</span>
+<span class="l-Scalar-Plain">chisq</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2.8721763211759494e-25</span>
+<span class="l-Scalar-Plain">rsq</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.0</span>
+<span class="l-Scalar-Plain">converged</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+<span class="l-Scalar-Plain">time</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5.249035120010376</span>
+<span class="l-Scalar-Plain">model</span><span class="p-Indicator">:</span> <span class="kt">!Model</span>
+  <span class="l-Scalar-Plain">scatterer</span><span class="p-Indicator">:</span> <span class="kt">!ParameterizedObject</span>
+    <span class="l-Scalar-Plain">obj</span><span class="p-Indicator">:</span> <span class="kt">!Sphere</span>
+      <span class="l-Scalar-Plain">n</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.58</span>
+      <span class="l-Scalar-Plain">r</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.5</span>
+      <span class="l-Scalar-Plain">center</span><span class="p-Indicator">:</span>
+      <span class="p-Indicator">-</span> <span class="kt">!Parameter</span>
+        <span class="l-Scalar-Plain">guess</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5.5</span>
+        <span class="l-Scalar-Plain">limit</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">4</span><span class="p-Indicator">,</span> <span class="nv">10</span><span class="p-Indicator">]</span>
+        <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">center[0]</span>
+      <span class="p-Indicator">-</span> <span class="kt">!Parameter</span>
+        <span class="l-Scalar-Plain">guess</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">4.5</span>
+        <span class="l-Scalar-Plain">limit</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">4</span><span class="p-Indicator">,</span> <span class="nv">10</span><span class="p-Indicator">]</span>
+        <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">center[1]</span>
+      <span class="p-Indicator">-</span> <span class="kt">!Parameter</span>
+        <span class="l-Scalar-Plain">guess</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">10</span>
+        <span class="l-Scalar-Plain">limit</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">5</span><span class="p-Indicator">,</span> <span class="nv">15</span><span class="p-Indicator">]</span>
+        <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">center[2]</span>
+  <span class="l-Scalar-Plain">theory</span><span class="p-Indicator">:</span> <span class="kt">!method</span> <span class="s">&#39;calc_holo</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">!Mie</span><span class="nv"> </span><span class="s">{compute_escat_radial:</span><span class="nv"> </span><span class="s">true,</span><span class="nv"> </span><span class="s">}&#39;</span>
+  <span class="l-Scalar-Plain">alpha</span><span class="p-Indicator">:</span> <span class="kt">!Parameter</span>
+    <span class="l-Scalar-Plain">guess</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.6</span>
+    <span class="l-Scalar-Plain">limit</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">0.1</span><span class="p-Indicator">,</span> <span class="nv">1</span><span class="p-Indicator">]</span>
+    <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">alpha</span>
+<span class="c1"># file truncated</span>
+</pre></div>
+</div>
+<p>You can notice that the result yaml contains the fitted results,
+information about the goodness of fit, time to fit, and information
+about how the fit was set up. Your file will also contain gory details
+about how the minimizer ran, but we have cut them off here to save
+space.</p>
+<p>You should save these files every time you do a fit that you are
+likely to care about again later. They are designed to hold all the
+information you might need to repeat a calculation or understand how a
+fit proceeded at some later point (like say when you are writing a
+paper).</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="marray-yaml" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first"><a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> objects and other <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Marray" title="holopy.core.marray.Marray"><tt class="xref py py-class docutils literal"><span class="pre">Marray</span></tt></a> can be saved as
+yaml files, but they will be large and cannot easily be viewed in a
+text editor like other HoloPy yamls.</p>
+<p class="last">For the curious advanced user, what we actually do is put a yaml
+header with optics and other information, and then encode the array
+of data as a .npy binary (as from np.save) all in the same file.
+This keeps the whole object in a single file, but generates a file
+that is not technically a valid yaml file. HoloPy can load them
+just fine, some tools (unix&#8217;s more, some editors) will be able to
+show you the text header (and then gibberish for the binary data).</p>
+</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="concepts.html" title="Concepts"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dda_tutorial.html" title="Scattering from Arbitrary Structures with DDA"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="tutorials.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

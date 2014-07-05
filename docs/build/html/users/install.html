@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installing HoloPy &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="Set up to build HoloPy" href="build_env.html" />
+    <link rel="prev" title="User Guide" href="index.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="build_env.html" title="Set up to build HoloPy"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="User Guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" accesskey="U">User Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installing HoloPy</a><ul>
+<li><a class="reference internal" href="#quick-start">Quick Start</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a><ul>
+<li><a class="reference internal" href="#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li><a class="reference internal" href="#windows-mac">Windows/Mac</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building">Building</a><ul>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+<li><a class="reference internal" href="#building-the-docs">Building the Docs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">User Guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="build_env.html"
+                        title="next chapter">Set up to build HoloPy</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/users/install.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installing-holopy">
+<span id="install"></span><h1>Installing HoloPy<a class="headerlink" href="#installing-holopy" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<p>If you already have scientific python installed, getting holopy set up
+should be as simple as grabbing a binary package from our <a class="reference external" href="http://www.manoharan.seas.harvard.edu/holopy/downloads.html">Downloads Page</a></p>
+<p>Unpack the archive, then, from a terminal, as root/adiminstrator, in
+the archive directory, run:</p>
+<div class="highlight-python"><pre>python setup.py install</pre>
+</div>
+<p>Or put the archive directory in your PYTHONPATH to import it directly
+from the archive.</p>
+<p>Once you have done that, start up python (we would suggest as
+<tt class="docutils literal"><span class="pre">ipython</span> <span class="pre">--pylab</span></tt> or the pylab console from EPD or similar) and run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">holopy</span>
+</pre></div>
+</div>
+<p>If you get your prompt back without errors, congratulations! You have
+successfully installed HoloPy. Proceed to the <a class="reference internal" href="tutorials.html#tutorials"><em>Tutorials</em></a>. If you
+get errors or just want to learn more, keep reading.</p>
+</div>
+<div class="section" id="dependencies">
+<span id="id1"></span><h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>HoloPy requires:</p>
+<ul class="simple">
+<li>python 2.7 (or python 2.6 + <a class="reference external" href="http://pypi.python.org/pypi/ordereddict">ordereddict</a>)</li>
+<li>numpy</li>
+<li>scipy</li>
+<li><a class="reference external" href="http://pypi.python.org/pypi/PyYAML/">PyYAML</a></li>
+</ul>
+<p>For interactive use we suggest (highly suggest in the case of ipython and matplotlib):</p>
+<ul class="simple">
+<li><a class="reference external" href="http://ipython.org">ipython</a> (better python terminal)</li>
+<li><a class="reference external" href="http://matplotlib.org">matplotlib</a> (plotting for python)</li>
+<li><a class="reference external" href="http://docs.enthought.com/mayavi/mayavi/">mayavi2</a> (if you want to do 3D plotting)</li>
+</ul>
+<p>Optional dependencies for certain calculations:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://code.google.com/p/a-dda/">a-dda</a> (Discrete Dipole calculations of arbitrary scatterers)</li>
+<li><a class="reference external" href="http://openopt.org">OpenOpt</a> (More minimizers)</li>
+</ul>
+<p>If you want to build HoloPy from source there are a few other python
+dependencies.  You will also need C and Fortran compilers.  Please see
+<a class="reference internal" href="#building"><em>Building</em></a>.</p>
+<div class="section" id="linux-ubuntu-debian">
+<h3>Linux (Ubuntu/Debian)<a class="headerlink" href="#linux-ubuntu-debian" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash"><div class="highlight"><pre>sudo apt-get install python-scipy ipython python-matplotlib python-yaml mayavi2
+</pre></div>
+</div>
+<p>Other flavors of linux might have slightly different package names.</p>
+</div>
+<div class="section" id="windows-mac">
+<h3>Windows/Mac<a class="headerlink" href="#windows-mac" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="http://www.enthought.com/products/epd.php">Enthought Python Distribution</a> should have the basics
+to get you started.</p>
+</div>
+</div>
+<div class="section" id="building">
+<span id="id2"></span><h2>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build_env.html">Set up to build HoloPy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="build_env.html#on-linux-ubuntu">On Linux (Ubuntu)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_env.html#on-windows">On Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_env.html#on-macos">On MacOS</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p><a class="reference external" href="http://www.manoharan.seas.harvard.edu/holopy/downloads.html">Download</a> and
+unpack a source build, or
+check out the source from launchpad:</p>
+<div class="highlight-python"><pre>bzr branch lp:holopy</pre>
+</div>
+<p>To build HoloPy run (in the root of HoloPy):</p>
+<div class="highlight-python"><pre>python setup.py build</pre>
+</div>
+<p>This will generate a build directory and put all the modules
+there. You can then install HoloPy by running (as administrator):</p>
+<div class="highlight-python"><pre>python setup.py install</pre>
+</div>
+<p>If you are a developer, you might not want use <tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span>
+<span class="pre">install</span></tt> because you might eventually find yourself with two versions
+of HoloPy on your system, one installed globally and one installed
+locally.  Thus, if you are going to hack on HoloPy, you probably only
+want to compile the scattering extensions, but not install the module
+globally on your system.  Let&#8217;s say you unpack the source archive in
+<tt class="docutils literal"><span class="pre">/home/me/holopy</span></tt>.  Then cd to <tt class="docutils literal"><span class="pre">/home/me/holopy</span></tt> and run</p>
+<p><tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">build_ext</span> <span class="pre">--inplace</span></tt></p>
+<p>This puts the extensions inside the source tree, so that you can work
+directly from <tt class="docutils literal"><span class="pre">/home/me/holopy</span></tt>.  You will need to add
+<tt class="docutils literal"><span class="pre">/home/me/holopy</span></tt> to your <tt class="docutils literal"><span class="pre">python_path</span></tt> for python to find the
+module when you import it.</p>
+<div class="section" id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h3>
+<p>HoloPy comes with a suite of tests that ensure everything has been
+built correctly and that it&#8217;s able to perform all of the calculations
+it is designed to do.  To run these tests, navigate to the root of the
+package (e.g. <tt class="docutils literal"><span class="pre">/home/me/holopy</span></tt>) and run:</p>
+<div class="highlight-bash"><div class="highlight"><pre>python run_nose.py
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-bash"><div class="highlight"><pre>nosetests -a <span class="s1">&#39;!slow&#39;</span>
+</pre></div>
+</div>
+<p>There is some extra test data that is not distributed with HoloPy but
+can help catch some kinds of bugs. The tests will run just fine
+without it, but should you want to run a slightly more thorough test
+you can retrieve this data with a script in the <tt class="docutils literal"><span class="pre">management</span></tt> directory:</p>
+<div class="highlight-python"><pre>python get_test_golds.py</pre>
+</div>
+</div>
+<div class="section" id="building-the-docs">
+<h3>Building the Docs<a class="headerlink" href="#building-the-docs" title="Permalink to this headline">¶</a></h3>
+<p>To compile the documentation run (from the docs directory):</p>
+<div class="highlight-python"><pre>make html</pre>
+</div>
+<p>(or type <tt class="docutils literal"><span class="pre">make</span></tt> to see the different kinds of formats you can
+create).  This will generate documentation in the <tt class="docutils literal"><span class="pre">docs/build</span></tt>
+directory.  Building the docs requires matplotlib version 1.1
+or newer.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="build_env.html" title="Set up to build HoloPy"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="User Guide"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

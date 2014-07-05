@@ -1,0 +1,217 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Set up to build HoloPy &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="Installing HoloPy" href="install.html" />
+    <link rel="next" title="Tutorials" href="tutorials.html" />
+    <link rel="prev" title="Installing HoloPy" href="install.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorials.html" title="Tutorials"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Installing HoloPy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="install.html" accesskey="U">Installing HoloPy</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Set up to build HoloPy</a><ul>
+<li><a class="reference internal" href="#on-linux-ubuntu">On Linux (Ubuntu)</a></li>
+<li><a class="reference internal" href="#on-windows">On Windows</a></li>
+<li><a class="reference internal" href="#on-macos">On MacOS</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="install.html"
+                        title="previous chapter">Installing HoloPy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tutorials.html"
+                        title="next chapter">Tutorials</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/users/build_env.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="set-up-to-build-holopy">
+<span id="build-env"></span><h1>Set up to build HoloPy<a class="headerlink" href="#set-up-to-build-holopy" title="Permalink to this headline">¶</a></h1>
+<p>In general what you need to build holopy (in addition to the basic
+<a class="reference internal" href="install.html#dependencies"><em>Dependencies</em></a>) is:</p>
+<ul class="simple">
+<li>a fortran 90 compiler (gfortran works, but not version 4.6)</li>
+<li>a fortran 77 compiler (gfortran works, but not version 4.6)</li>
+<li>a c compiler (gcc works)</li>
+<li>numpy.distutils (should ship with numpy)</li>
+<li>f2py (should ship with numpy)</li>
+<li>python development package (specifically python.h)</li>
+</ul>
+<p>If you want to generate the documentation, you&#8217;ll also need</p>
+<ul class="simple">
+<li>sphinx (python package for generating documentation from docstrings)</li>
+<li>a LaTeX distribution (to generate the equations in the documentation) - Note: many smaller distributions do not include utf8.def which is required for sphinx, so you may need to install extra packages</li>
+<li>dvipng</li>
+</ul>
+<div class="section" id="on-linux-ubuntu">
+<h2>On Linux (Ubuntu)<a class="headerlink" href="#on-linux-ubuntu" title="Permalink to this headline">¶</a></h2>
+<p>You can install all of the packages you need to build HoloPy and its
+documentation and run the HoloPy&#8217;s tests with:</p>
+<div class="highlight-python"><pre>sudo apt-get install mayavi2 python-scipy bzr gfortran ipython \
+  python-matplotlib python-yaml python-dev texlive-fonts-extra \
+  texlive-fonts-recommended texlive-latex-extra texlive-science</pre>
+</div>
+<p>It will likely be a similar list of packages for other linuxes.</p>
+</div>
+<div class="section" id="on-windows">
+<h2>On Windows<a class="headerlink" href="#on-windows" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Install the <a class="reference external" href="http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/mingw-get-inst-20120426/mingw-get-inst-20120426.exe/download">MingW compiler</a>. Make
+sure to install gfortran when prompted to select compilers.</li>
+<li>Install the <a class="reference external" href="http://www.enthought.com/products/epd.php">Enthought Python Distribution</a></li>
+<li>Install <a class="reference external" href="http://pypi.python.org/pypi/PyYAML/">PyYAML</a></li>
+</ol>
+<p>You are on your own with respect to building the documentation on
+windows, let us know what it took if you succeed.</p>
+</div>
+<div class="section" id="on-macos">
+<h2>On MacOS<a class="headerlink" href="#on-macos" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Install the <a class="reference external" href="https://developer.apple.com/xcode/">XCode Tools</a>. This includes an incomplete
+version of gcc, the Gnu compiler collection. You will need also to
+download the optional &#8220;Command Line Tools&#8221; (see the&#8221;Downloads&#8221;
+panel under &#8220;Preferences&#8221;).</p>
+</li>
+<li><p class="first">Install gfortran. Follow the instructions to install the
+appropriate binaries from HPC <a class="reference external" href="http://hpc.sourceforge.net/">here</a>. (these aren&#8217;t available through
+macports)</p>
+</li>
+<li><p class="first">Install the required python packages one of two ways</p>
+<ol class="arabic">
+<li><p class="first"><strong>With prepared packages</strong></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><a class="reference external" href="http://www.enthought.com/products/epd.php">Enthought Python Distribution</a></li>
+<li><a class="reference external" href="http://pypi.python.org/pypi/PyYAML/">PyYAML</a></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>With macports</strong></p>
+<p>This will give you a cleaner setup overall, but you are on your
+own getting macports working (someone should check me that these
+are the correct port packages to install, I don&#8217;t have a mac to
+check them on):</p>
+<div class="highlight-python"><pre>port install py27-scipy py27-ipython py27-matplotlib py27-yaml</pre>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+<p>You are on your own with respect to building the documentation on mac,
+let us know what it took if you succeed.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorials.html" title="Tutorials"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Installing HoloPy"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="install.html" >Installing HoloPy</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,196 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Holography and Light Scattering in Python &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="#" />
+    <link rel="next" title="User Guide" href="users/index.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="#"><img src="_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="users/index.html" title="User Guide"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Holography and Light Scattering in Python</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="users/index.html"
+                        title="next chapter">User Guide</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="holography-and-light-scattering-in-python">
+<h1>Holography and Light Scattering in Python<a class="headerlink" href="#holography-and-light-scattering-in-python" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Release:</th><td class="field-body">2.0.0</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Date:</th><td class="field-body">April 23, 2014</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="xref py py-mod docutils literal"><span class="pre">HoloPy</span></tt> is a python based tool for working with digital
+holograms and light scattering. HoloPy can:</p>
+<ul class="simple">
+<li><a class="reference internal" href="users/load_tutorial.html#loading"><em>Load</em></a> images, associate them with experimental
+<a class="reference internal" href="users/load_tutorial.html#metadata"><em>metadata</em></a>, and visualize loaded or calculated images.</li>
+<li><a class="reference internal" href="users/recon_tutorial.html#recon-tutorial"><em>Reconstruct</em></a> 3D volumes from digital holograms</li>
+<li>Do <a class="reference internal" href="users/calc_tutorial.html#calc-tutorial"><em>Scattering Calculations</em></a><ul>
+<li><strong>Compute</strong> Holograms, electric fields, scattered intensity,
+cross sections, ...</li>
+<li><strong>From</strong> spheres, clusters of spheres, and arbitrary structures
+(using <a class="reference internal" href="users/dda_tutorial.html#dda-tutorial"><em>DDA</em></a>)</li>
+</ul>
+</li>
+<li>Make precise measurements by <a class="reference internal" href="users/fit_tutorial.html#fit-tutorial"><em>fitting scattering models</em></a> (based on the above structures) to experimental
+data.</li>
+</ul>
+<p>HoloPy provides a powerful and user-friendly interface to scattering
+and optical propagation theories. It also provides a set of flexible
+objects that make it easy to describe and analyze data from complex
+experiments or simulations.</p>
+<p>The easiest way to see what HoloPy is all about is to jump to the
+examples in our <a class="reference internal" href="users/index.html#user-guide"><em>User Guide</em></a>.</p>
+<p>HoloPy started as a project in the <a class="reference external" href="http://manoharan.seas.harvard.edu/">Manoharan Lab at Harvard
+University</a>. If you use HoloPy,
+you may wish to cite one or more of the sources listed in
+<a class="reference internal" href="credits.html#credits"><em>References and credits</em></a>. We also encourage you to sign up for our <a class="reference external" href="https://groups.google.com/d/forum/holopy-users">User Mailing
+List</a> to keep up to
+date on releases, answer questions, and benefit from other users&#8217;
+questions.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="users/index.html">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="users/install.html">Installing HoloPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users/tutorials.html">Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users/concepts.html">Concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference/holopy.html"><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/holopy.core.html">core Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/holopy.propagation.html">propagation Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/holopy.scattering.html">scattering Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/holopy.fitting.html">fitting Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/holopy.vis.html">vis Package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">References and credits</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+<p>HoloPy is based upon work supported by the National Science Foundation
+under Grant No. CBET-0747625 and performed in the <a class="reference external" href="http://manoharan.seas.harvard.edu">Manoharan Lab at
+Harvard University</a></p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="users/index.html" title="User Guide"
+             >next</a> |</li>
+        <li><a href="#">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

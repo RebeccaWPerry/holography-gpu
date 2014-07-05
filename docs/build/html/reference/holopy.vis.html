@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>vis Package &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="holopy Code Reference" href="holopy.html" />
+    <link rel="next" title="References and credits" href="../credits.html" />
+    <link rel="prev" title="fitting Package" href="holopy.fitting.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../credits.html" title="References and credits"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="holopy.fitting.html" title="fitting Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" accesskey="U"><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">vis Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">vis</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-holopy.vis.show"><tt class="docutils literal"><span class="pre">show</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="holopy.fitting.html"
+                        title="previous chapter">fitting Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../credits.html"
+                        title="next chapter">References and credits</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/holopy.vis.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="vis-package">
+<h1>vis Package<a class="headerlink" href="#vis-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">vis</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-holopy.vis"></span><p>Visualize HoloPy objects</p>
+<p>Uses Matplotlib and Mayavi to visualize holopy objects.</p>
+<ol class="arabic simple">
+<li><a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a>, <a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.Volume" title="holopy.core.marray.Volume"><tt class="xref py py-class docutils literal"><span class="pre">Volume</span></tt></a>, or <a class="reference internal" href="holopy.scattering.scatterer.html#holopy.scattering.scatterer.spherecluster.Spheres" title="holopy.scattering.scatterer.spherecluster.Spheres"><tt class="xref py py-class docutils literal"><span class="pre">Spheres</span></tt></a> object =&gt;
+plot or rendering</li>
+</ol>
+<p>This module does not import plotting packages until they are actually needed so
+that holopy does not have a hard dependency on mayavi or matplotlib.  Because of
+this you may see a small lag on your first plot.</p>
+</div>
+<div class="section" id="module-holopy.vis.show">
+<span id="show-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">show</span></tt> Module<a class="headerlink" href="#module-holopy.vis.show" title="Permalink to this headline">¶</a></h2>
+<p>A general show method that can display most holopy and scatterpy objects in a
+sensible way.</p>
+<dl class="function">
+<dt id="holopy.vis.show.show">
+<tt class="descclassname">holopy.vis.show.</tt><tt class="descname">show</tt><big>(</big><em>o</em>, <em>color=(0.5</em>, <em>0.5</em>, <em>0.5)</em><big>)</big><a class="headerlink" href="#holopy.vis.show.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize a scatterer, hologram, or reconstruction</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>o</strong> : <a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a>, <a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.Volume" title="holopy.core.marray.Volume"><tt class="xref py py-class docutils literal"><span class="pre">Volume</span></tt></a> or <a class="reference internal" href="holopy.scattering.scatterer.html#holopy.scattering.scatterer.spherecluster.Spheres" title="holopy.scattering.scatterer.spherecluster.Spheres"><tt class="xref py py-class docutils literal"><span class="pre">Spheres</span></tt></a></p>
+<blockquote class="last">
+<div><p>Object to visualize</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Loads plotting library the first time it is required (so that we don&#8217;t have
+to import all of matplotlib or mayavi just to load holopy)</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../credits.html" title="References and credits"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="holopy.fitting.html" title="fitting Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" ><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

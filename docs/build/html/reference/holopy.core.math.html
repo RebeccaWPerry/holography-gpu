@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Math Module &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="core Package" href="holopy.core.html" />
+    <link rel="next" title="process Package" href="holopy.core.process.html" />
+    <link rel="prev" title="metadata Module" href="holopy.core.metadata.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="holopy.core.process.html" title="process Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="holopy.core.metadata.html" title="metadata Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" ><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li>
+          <li><a href="holopy.core.html" accesskey="U">core Package</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="holopy.core.metadata.html"
+                        title="previous chapter">metadata Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="holopy.core.process.html"
+                        title="next chapter">process Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/holopy.core.math.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-holopy.core.math">
+<span id="math-module"></span><h1>Math Module<a class="headerlink" href="#module-holopy.core.math" title="Permalink to this headline">¶</a></h1>
+<p>Misc utility functions to make coding more convenient</p>
+<dl class="function">
+<dt id="holopy.core.math.cartesian_distance">
+<tt class="descclassname">holopy.core.math.</tt><tt class="descname">cartesian_distance</tt><big>(</big><em>p1</em>, <em>p2</em><big>)</big><a class="headerlink" href="#holopy.core.math.cartesian_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Cartesian distance between points p1 and p2.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>p1, p2: array or list</strong> :</p>
+<blockquote>
+<div><p>Coordinates of point 1 and point 2 in N-dimensions</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>dist: float64</strong> :</p>
+<blockquote class="last">
+<div><p>Cartesian distance between points p1 and p2</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.math.fft">
+<tt class="descclassname">holopy.core.math.</tt><tt class="descname">fft</tt><big>(</big><em>a</em>, <em>overwrite=False</em>, <em>shift=True</em><big>)</big><a class="headerlink" href="#holopy.core.math.fft" title="Permalink to this definition">¶</a></dt>
+<dd><p>More convenient Fast Fourier Transform</p>
+<p>An easier to use fft function, it will pick the correct fft to do
+based on the shape of the Marray, and do the fftshift for you.  This
+is intended for working with images, and thus for dimensions
+greater than 2 does slicewise transforms of each &#8220;image&#8221; in a
+multidimensional stack</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>a</strong> : ndarray</p>
+<blockquote>
+<div><p>The array to transform</p>
+</div></blockquote>
+<p><strong>overwrite</strong> : bool</p>
+<blockquote>
+<div><p>Allow this function to overwrite the Marry you pass in.  This
+may improve performance slightly.  Default is not to overwrite</p>
+</div></blockquote>
+<p><strong>shift</strong> : bool</p>
+<blockquote>
+<div><p>Whether to preform an fftshift on the Marry to give low
+frequences near the center as you probably expect.  Default is
+to do the fftshift.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>fta</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>The fourier transform of <cite>a</cite></p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.math.ifft">
+<tt class="descclassname">holopy.core.math.</tt><tt class="descname">ifft</tt><big>(</big><em>a</em>, <em>overwrite=False</em>, <em>shift=True</em><big>)</big><a class="headerlink" href="#holopy.core.math.ifft" title="Permalink to this definition">¶</a></dt>
+<dd><p>More convenient Inverse Fast Fourier Transform</p>
+<p>An easier to use ifft function, it will pick the correct ifft to
+do based on the shape of the Marry, and do the fftshift for you.
+This is indendended for working with images, and thus for
+dimensions greater than 2 does slicewise transforms of each
+&#8220;image&#8221; in a multidimensional stack</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>a</strong> : ndarray</p>
+<blockquote>
+<div><p>The array to transform</p>
+</div></blockquote>
+<p><strong>overwrite</strong> : bool</p>
+<blockquote>
+<div><p>Allow this function to overwrite the Marry you pass in.  This
+may improve performance slightly.  Default is not to overwrite</p>
+</div></blockquote>
+<p><strong>shift</strong> : bool</p>
+<blockquote>
+<div><p>Whether to preform an fftshift on the Marry to give low
+frequences near the center as you probably expect.  Default is to
+do the fftshift.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>ifta</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>The inverse fourier transform of <cite>a</cite></p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.math.rotation_matrix">
+<tt class="descclassname">holopy.core.math.</tt><tt class="descname">rotation_matrix</tt><big>(</big><em>alpha</em>, <em>beta</em>, <em>gamma</em>, <em>radians=True</em><big>)</big><a class="headerlink" href="#holopy.core.math.rotation_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a 3D rotation matrix</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>alpha, beta, gamma: float</strong> :</p>
+<blockquote>
+<div><p>Euler rotation angles in z, y, z convention</p>
+</div></blockquote>
+<p><strong>radians: boolean</strong> :</p>
+<blockquote>
+<div><p>Default True; treats input angles in radians</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>rot: array(3,3)</strong> :</p>
+<blockquote class="last">
+<div><p>Rotation matrix. To rotate a column vector x, use np.dot(rot, x.)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The Euler angles rotate a vector (in the active picture) by alpha
+clockwise about the fixed lab z axis, beta clockwise about
+the lab y axis, and by gamma about the lab z axis.  Clockwise is
+defined as viewed from the origin, looking in the positive direction
+along an axis.</p>
+<p>This breaks compatability with previous conventions, which were adopted for 
+compatability with the passive picture used by SCSMFO.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="holopy.core.process.html" title="process Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="holopy.core.metadata.html" title="metadata Module"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" ><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li>
+          <li><a href="holopy.core.html" >core Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

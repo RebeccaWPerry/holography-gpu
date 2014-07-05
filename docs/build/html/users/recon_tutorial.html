@@ -1,0 +1,240 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reconstructing Data (Numerical Propagation) &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="tutorials.html" />
+    <link rel="next" title="Scattering Calculations" href="calc_tutorial.html" />
+    <link rel="prev" title="Loading Data" href="load_tutorial.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="calc_tutorial.html" title="Scattering Calculations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="load_tutorial.html" title="Loading Data"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="tutorials.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Reconstructing Data (Numerical Propagation)</a><ul>
+<li><a class="reference internal" href="#loading-data">Loading Data</a></li>
+<li><a class="reference internal" href="#propagating">Propagating</a></li>
+<li><a class="reference internal" href="#visualizing-reconstructions">Visualizing Reconstructions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="load_tutorial.html"
+                        title="previous chapter">Loading Data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="calc_tutorial.html"
+                        title="next chapter">Scattering Calculations</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/users/recon_tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="reconstructing-data-numerical-propagation">
+<span id="recon-tutorial"></span><h1>Reconstructing Data (Numerical Propagation)<a class="headerlink" href="#reconstructing-data-numerical-propagation" title="Permalink to this headline">¶</a></h1>
+<p>Holograms are typically reconstructed optically by shining light back
+through them.  This corresponds mathematically to propagating the
+field stored in the hologram to some different plane.  HoloPy
+generalizes this concept and allows you to numerically propagate any
+hologram (or electric field) to another position in space.</p>
+<p>Reconstructions generally consist of the following steps</p>
+<ol class="arabic simple">
+<li><a class="reference internal" href="load_tutorial.html#loading"><em>Load</em></a> or <a class="reference internal" href="calc_tutorial.html#calc-tutorial"><em>calculate</em></a> a
+Hologram <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a>.</li>
+<li><a class="reference internal" href="#propagating"><em>Propagate</em></a> the image to the desired distance or
+set of distances.</li>
+<li><a class="reference internal" href="#visualize-recon"><em>Visualize</em></a> the reconstruction.</li>
+</ol>
+<p>Here is an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span>
+<span class="kn">import</span> <span class="nn">holopy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">Optics</span>
+<span class="kn">from</span> <span class="nn">holopy.propagation</span> <span class="kn">import</span> <span class="n">propagate</span>
+<span class="kn">from</span> <span class="nn">holopy.core.tests.common</span> <span class="kn">import</span> <span class="n">get_example_data</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">load</span>
+
+<span class="n">holo</span> <span class="o">=</span> <span class="n">get_example_data</span><span class="p">(</span><span class="s">&#39;image0001.yaml&#39;</span><span class="p">)</span>
+<span class="n">rec_vol</span> <span class="o">=</span> <span class="n">propagate</span><span class="p">(</span><span class="n">holo</span><span class="p">,</span> <span class="n">linspace</span><span class="p">(</span><span class="mf">4e-6</span><span class="p">,</span> <span class="mf">10e-6</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">rec_vol</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../pyplots/basic_recon.py">Source code</a>, <a class="reference external" href="../pyplots/basic_recon.png">png</a>, <a class="reference external" href="../pyplots/basic_recon.hires.png">hires.png</a>, <a class="reference external" href="../pyplots/basic_recon.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/basic_recon.png" src="../_images/basic_recon.png" />
+</div>
+<p>We&#8217;ll examine each section of code in turn. The first block:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">holopy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="kn">from</span> <span class="nn">holopy.propagation</span> <span class="kn">import</span> <span class="n">propagate</span>
+<span class="kn">from</span> <span class="nn">holopy.core.tests.common</span> <span class="kn">import</span> <span class="n">get_example_data</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">load</span>
+</pre></div>
+</div>
+<p>loads the relevant modules from HoloPy and NumPy.</p>
+<div class="section" id="loading-data">
+<h2>Loading Data<a class="headerlink" href="#loading-data" title="Permalink to this headline">¶</a></h2>
+<p>We use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">holo</span> <span class="o">=</span> <span class="n">get_example_data</span><span class="p">(</span><span class="s">&#39;image0001.yaml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>to load one of the example images shipped with HoloPy. It already
+contains all needed metadata. For working with your data you will
+instead want to use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">holo</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;your_image.tif&#39;</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="mf">1e-7</span><span class="p">,</span>
+            <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="mf">660e-9</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">,</span>
+                            <span class="n">polarization</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>The spacing and wavelength can be specified in whatever units you
+prefer, as long as you are consistent (see <a class="reference internal" href="concepts.html#units"><em>Units</em></a>). Holopy load
+any image formats <a class="reference external" href="http://www.pythonware.com/products/pil/">PIL</a> can
+load (which is most image formats).</p>
+</div>
+<div class="section" id="propagating">
+<span id="id1"></span><h2>Propagating<a class="headerlink" href="#propagating" title="Permalink to this headline">¶</a></h2>
+<p>The actual propagation is accomplished with <a class="reference internal" href="../reference/holopy.propagation.html#holopy.propagation.convolution_propagation.propagate" title="holopy.propagation.convolution_propagation.propagate"><tt class="xref py py-func docutils literal"><span class="pre">propagate()</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">rec_vol</span> <span class="o">=</span> <span class="n">propagate</span><span class="p">(</span><span class="n">holo</span><span class="p">,</span> <span class="n">linspace</span><span class="p">(</span><span class="mf">4e-6</span><span class="p">,</span> <span class="mf">10e-6</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Here we have used numpy&#8217;s linspace to get a set of distances to
+propagate to. You can also propagate to a single distance, or to set
+of distances obtained in some other fashion.</p>
+</div>
+<div class="section" id="visualizing-reconstructions">
+<span id="visualize-recon"></span><h2>Visualizing Reconstructions<a class="headerlink" href="#visualizing-reconstructions" title="Permalink to this headline">¶</a></h2>
+<p>You can then visualize the reconstruction with <a class="reference internal" href="../reference/holopy.vis.html#holopy.vis.show.show" title="holopy.vis.show.show"><tt class="xref py py-func docutils literal"><span class="pre">show()</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">hp</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">rec_vol</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can step through volume slices with the left and right arrow keys
+(Don&#8217;t use the down arrow key; it will mess up the stepping due to a
+peculiarity of Matplotlib. If this happens, close your plot window and
+show it again. Sorry.).</p>
+<p>Reconstructions are actually comprised of complex numbers. hp.show
+defaults to showing you the amplitude of the image. You can get
+different, and sometimes better, contrast by viewing the phase angle or
+imaginary part of the reconstruction:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">hp</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">rec_vol</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">rec_vol</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>These phase sensitive visualizations will change contrast as you step
+through because you hit different places in the phase period. Such a
+reconstruction will work better if you use steps that are an integer
+number of wavelengths in medium:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">arange</span>
+<span class="n">rec_vol</span> <span class="o">=</span> <span class="n">propagate</span><span class="p">(</span><span class="n">holo</span><span class="p">,</span> <span class="n">linspace</span><span class="p">(</span><span class="mf">4e-6</span><span class="p">,</span> <span class="mf">10e-6</span><span class="p">,</span> <span class="n">holo</span><span class="o">.</span><span class="n">optics</span><span class="o">.</span><span class="n">med_wavelen</span><span class="p">))</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">rec_vol</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="calc_tutorial.html" title="Scattering Calculations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="load_tutorial.html" title="Loading Data"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="tutorials.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

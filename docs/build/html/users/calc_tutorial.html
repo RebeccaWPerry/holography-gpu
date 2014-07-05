@@ -1,0 +1,473 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Scattering Calculations &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="tutorials.html" />
+    <link rel="next" title="Fitting Models to Data" href="fit_tutorial.html" />
+    <link rel="prev" title="Reconstructing Data (Numerical Propagation)" href="recon_tutorial.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="fit_tutorial.html" title="Fitting Models to Data"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="recon_tutorial.html" title="Reconstructing Data (Numerical Propagation)"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="tutorials.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Scattering Calculations</a><ul>
+<li><a class="reference internal" href="#a-simple-example">A Simple Example</a></li>
+<li><a class="reference internal" href="#more-scattering-examples">More Scattering Examples</a><ul>
+<li><a class="reference internal" href="#collection-of-spheres">Collection of Spheres</a></li>
+<li><a class="reference internal" href="#coated-spheres">Coated Spheres</a></li>
+<li><a class="reference internal" href="#ellipsoids">Ellipsoids</a></li>
+<li><a class="reference internal" href="#non-square-detectors-and-or-pixels">Non-Square Detectors and/or Pixels</a></li>
+<li><a class="reference internal" href="#static-light-scattering-calculations">Static light scattering calculations</a></li>
+<li><a class="reference internal" href="#non-default-theory-parameters">Non-default Theory Parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="recon_tutorial.html"
+                        title="previous chapter">Reconstructing Data (Numerical Propagation)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="fit_tutorial.html"
+                        title="next chapter">Fitting Models to Data</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/users/calc_tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="scattering-calculations">
+<span id="calc-tutorial"></span><h1>Scattering Calculations<a class="headerlink" href="#scattering-calculations" title="Permalink to this headline">¶</a></h1>
+<p>Optical physicists and astronomers have worked out how to compute the
+scattering of light from many kinds of objects.  HoloPy provides an
+easy interface for computing scattered fields, intensities, scattering
+matrices, cross-sections, and holograms generated by microscopic objects.</p>
+<p>Scattering calculations generally consist of the following steps:</p>
+<ol class="arabic simple">
+<li>Define a scatterer using a <a class="reference internal" href="../reference/holopy.scattering.scatterer.html#module-holopy.scattering.scatterer" title="holopy.scattering.scatterer"><tt class="xref py py-mod docutils literal"><span class="pre">scatterer</span></tt></a> object.</li>
+<li>Specify laser properties and where to compute the values using a
+<a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Schema" title="holopy.core.marray.Schema"><tt class="xref py py-mod docutils literal"><span class="pre">Schema</span></tt></a> object.</li>
+<li>Use a calc function from a <a class="reference internal" href="../reference/holopy.scattering.theory.html#module-holopy.scattering.theory" title="holopy.scattering.theory"><tt class="xref py py-mod docutils literal"><span class="pre">theory</span></tt></a> object
+to compute scattered quantities.</li>
+</ol>
+<div class="section" id="a-simple-example">
+<h2>A Simple Example<a class="headerlink" href="#a-simple-example" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s start by calculating an in-line hologram generated by a
+plane wave scattering from a microsphere.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">holopy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">ImageSchema</span><span class="p">,</span> <span class="n">Optics</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">Mie</span>
+
+<span class="n">sphere</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="o">+.</span><span class="mo">0001j</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="n">shape</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+                     <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">,</span>
+                                     <span class="n">polarization</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+
+<span class="n">holo</span> <span class="o">=</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">sphere</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">holo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../pyplots/calc_sphere.py">Source code</a>, <a class="reference external" href="../pyplots/calc_sphere.png">png</a>, <a class="reference external" href="../pyplots/calc_sphere.hires.png">hires.png</a>, <a class="reference external" href="../pyplots/calc_sphere.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/calc_sphere.png" src="../_images/calc_sphere.png" />
+</div>
+<p>We&#8217;ll examine each section of code in turn.  The first few lines</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">ImageSchema</span><span class="p">,</span> <span class="n">Optics</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">Mie</span>
+</pre></div>
+</div>
+<p>load the relevant modules from HoloPy that we&#8217;ll need for doing our
+calculation.  The next line</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sphere</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="o">+.</span><span class="mo">0001j</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>defines a <a class="reference internal" href="../reference/holopy.scattering.scatterer.html#module-holopy.scattering.scatterer" title="holopy.scattering.scatterer"><tt class="xref py py-mod docutils literal"><span class="pre">scatterer</span></tt></a> object, specifically a
+<a class="reference internal" href="../reference/holopy.scattering.scatterer.html#holopy.scattering.scatterer.sphere.Sphere" title="holopy.scattering.scatterer.sphere.Sphere"><tt class="xref py py-class docutils literal"><span class="pre">Sphere</span></tt></a>. A <a class="reference internal" href="../reference/holopy.scattering.scatterer.html#module-holopy.scattering.scatterer" title="holopy.scattering.scatterer"><tt class="xref py py-mod docutils literal"><span class="pre">scatterer</span></tt></a> object
+contains information about the geometry (position, size, shape) and
+optical properties (refractive index) of the thing that is scattering
+light.  Here, we&#8217;ve defined a spherical scatterer with radius 0.5,
+center of mass at x=4, y=3, z=5 microns, and index of refraction
+1.59+0.0001j. This refractive index is approximately that of
+polystyrene. We include a small imaginary component (the &#8220;0.0001j&#8221;) in
+the refractive index because it helps avoid some numerical problems in
+the scattering calculations. It won&#8217;t significantly affect our
+calculation.</p>
+<p>For more on the types of scatterers you can model, see
+<a class="reference internal" href="../reference/holopy.scattering.scatterer.html#module-holopy.scattering.scatterer" title="holopy.scattering.scatterer"><tt class="xref py py-mod docutils literal"><span class="pre">holopy.scattering.scatterer</span></tt></a> or <a class="reference internal" href="#more-scattering-ex"><em>More Scattering Examples</em></a>
+below.</p>
+<p>The next few lines define a <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Schema" title="holopy.core.marray.Schema"><tt class="xref py py-class docutils literal"><span class="pre">Schema</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="n">shape</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+                     <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">,</span>
+                                     <span class="n">polarization</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Schema" title="holopy.core.marray.Schema"><tt class="xref py py-class docutils literal"><span class="pre">Schema</span></tt></a> objects tell HoloPy what its calculated results
+should look like. In general you might use them to model a particular
+detector. Here we use a subclass of <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Schema" title="holopy.core.marray.Schema"><tt class="xref py py-class docutils literal"><span class="pre">Schema</span></tt></a> called an
+<a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.ImageSchema" title="holopy.core.marray.ImageSchema"><tt class="xref py py-class docutils literal"><span class="pre">ImageSchema</span></tt></a> to model a camera with 100x100 pixels (its
+&#8220;shape&#8221;) and a pixel size (&#8220;spacing&#8221;) of 0.1 microns.</p>
+<p>Schemas are (intentionally) similar to the objects created by loading
+data.  For example, the <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.ImageSchema" title="holopy.core.marray.ImageSchema"><tt class="xref py py-class docutils literal"><span class="pre">ImageSchema</span></tt></a> object we&#8217;ve created
+also contains metadata about the optical train, specifically, the
+wavelength (in vacuum) and polarization of the incident light, and the
+refractive index of the medium the scatterer is embedded in (see
+<a class="reference internal" href="concepts.html#units"><em>Units</em></a> and <a class="reference internal" href="concepts.html#coordinate-system"><em>Coordinate system</em></a> if you&#8217;re confused about how
+the units and polarization are specified).  The metadata allows HoloPy
+to calculate a hologram based solely on a Schema and a Scatterer.
+That&#8217;s what we&#8217;ll do next.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">An <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.ImageSchema" title="holopy.core.marray.ImageSchema"><tt class="xref py py-class docutils literal"><span class="pre">ImageSchema</span></tt></a> is similar to an <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> object in
+that it specifies the coordinates of the camera pixels and contains
+the same optical information. The two object classes differ in that
+an <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> must contain data for all of the coordinates,
+while an <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.ImageSchema" title="holopy.core.marray.ImageSchema"><tt class="xref py py-class docutils literal"><span class="pre">ImageSchema</span></tt></a> contains only the locations. So,
+Holopy allows you to provide an <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> anywhere an
+<a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.ImageSchema" title="holopy.core.marray.ImageSchema"><tt class="xref py py-class docutils literal"><span class="pre">ImageSchema</span></tt></a> is needed.  This comes in handy when fitting to
+an <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> you have already loaded.</p>
+</div>
+<p>If you want to model other kinds of detectors, you can specify all of
+the measurement locations using a general <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Schema" title="holopy.core.marray.Schema"><tt class="xref py py-class docutils literal"><span class="pre">Schema</span></tt></a> object or
+one of its other subclasses.</p>
+<p>OK, now for the fun part.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">holo</span> <span class="o">=</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">sphere</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This line calculates the hologram using a scattering
+<a class="reference internal" href="../reference/holopy.scattering.theory.html#module-holopy.scattering.theory" title="holopy.scattering.theory"><tt class="xref py py-mod docutils literal"><span class="pre">theory</span></tt></a>.  HoloPy contains a number of
+scattering theories to model the scattering from different kinds of
+scatterers.  Here, we&#8217;ve selected the Mie theory
+(<a class="reference internal" href="../reference/holopy.scattering.theory.html#module-holopy.scattering.theory.mie" title="holopy.scattering.theory.mie"><tt class="xref py py-class docutils literal"><span class="pre">holopy.scattering.theory.mie</span></tt></a>), which is the exact solution
+to Maxwell&#8217;s equations for the scattered field from a spherical
+particle, originally derived by Gustav Mie and (independently) by
+Ludvig Lorenz in the early 1900s.</p>
+<p>The <tt class="docutils literal"><span class="pre">Mie.calc_holo</span></tt> function will calculate the in-line hologram
+generated at the detector plane by the interference between the
+scattered field and the reference wave, which, for an in-line
+hologram, is simply the part of the field that is not scattered
+or absorbed by the particle.</p>
+<p>You can visualize the hologram by running</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">holopy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">holo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also calculate just the scattered field using
+<tt class="docutils literal"><span class="pre">Mie.calc_field</span></tt>, or the scattered intensity using
+<tt class="docutils literal"><span class="pre">Mie.calc_intensity</span></tt>.  The scattered intensity is what is typically
+measured in a light scattering experiment, whereas the hologram is
+what you get when you put a camera very close to the particle and use
+coherent illumination (a laser).</p>
+<p>The Mie theory works nicely for spheres, but we wouldn&#8217;t want to use
+it for, say, a coffee cup.  HoloPy includes a number of different
+scattering theories that are suited for different kinds of scatterers.
+Have a look at the documentation for the
+<a class="reference internal" href="../reference/holopy.scattering.theory.html#module-holopy.scattering.theory" title="holopy.scattering.theory"><tt class="xref py py-mod docutils literal"><span class="pre">holopy.scattering.theory</span></tt></a> module to see what kinds of theories
+you can use, and what scatterers they are useful for.  A
+<a class="reference internal" href="../reference/holopy.scattering.theory.html#module-holopy.scattering.theory" title="holopy.scattering.theory"><tt class="xref py py-mod docutils literal"><span class="pre">theory</span></tt></a> will give an error if you try to use
+it on an object for which it&#8217;s not suitable.</p>
+</div>
+<div class="section" id="more-scattering-examples">
+<span id="more-scattering-ex"></span><h2>More Scattering Examples<a class="headerlink" href="#more-scattering-examples" title="Permalink to this headline">¶</a></h2>
+<p>Now let&#8217;s take these calculations a step further.  We&#8217;ll compute the
+scattering from objects more complex than a single sphere, and we&#8217;ll
+model other types of experiments and detectors.</p>
+<div class="section" id="collection-of-spheres">
+<h3>Collection of Spheres<a class="headerlink" href="#collection-of-spheres" title="Permalink to this headline">¶</a></h3>
+<p>Calculating a hologram from a collection of spheres is done in a very
+similar manner to calculating a hologram from a single sphere</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">holopy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">Mie</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Sphere</span><span class="p">,</span> <span class="n">Spheres</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">ImageSchema</span><span class="p">,</span> <span class="n">Optics</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="n">shape</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+                     <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">,</span>
+                                     <span class="n">polarization</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="n">Spheres</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">])</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">collection</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">holo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../pyplots/calc_two_spheres.py">Source code</a>, <a class="reference external" href="../pyplots/calc_two_spheres.png">png</a>, <a class="reference external" href="../pyplots/calc_two_spheres.hires.png">hires.png</a>, <a class="reference external" href="../pyplots/calc_two_spheres.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/calc_two_spheres.png" src="../_images/calc_two_spheres.png" />
+</div>
+<p>Note that the thing we&#8217;re scattering from is now an object of type
+<a class="reference internal" href="../reference/holopy.scattering.scatterer.html#holopy.scattering.scatterer.spherecluster.Spheres" title="holopy.scattering.scatterer.spherecluster.Spheres"><tt class="xref py py-class docutils literal"><span class="pre">Spheres</span></tt></a>, which is composed of multiple
+<a class="reference internal" href="../reference/holopy.scattering.scatterer.html#holopy.scattering.scatterer.sphere.Sphere" title="holopy.scattering.scatterer.sphere.Sphere"><tt class="xref py py-class docutils literal"><span class="pre">Sphere</span></tt></a> objects.  This is why we
+added the line</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">collection</span> <span class="o">=</span> <span class="n">Spheres</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Using the Mie theory will calculate the hologram by superposing the
+fields from multiple independent particles. This doesn&#8217;t account for
+multiple scattering or coupling of the near-fields of the particles.
+If you want to include these effects, you should use the
+<a class="reference internal" href="../reference/holopy.scattering.theory.html#module-holopy.scattering.theory.multisphere" title="holopy.scattering.theory.multisphere"><tt class="xref py py-class docutils literal"><span class="pre">multisphere</span></tt></a> theory, based on the
+SCSMFO package from Daniel Mackowski, which gives the exact solution to
+Maxwell&#8217;s equation for the scattering from an arbitrary arrangement of
+non-overlapping spheres:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">Multisphere</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">Multisphere</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Adding more spheres to the cluster is as simple as defining more
+sphere objects and passing a longer list of spheres to the
+<a class="reference internal" href="../reference/holopy.scattering.scatterer.html#holopy.scattering.scatterer.spherecluster.Spheres" title="holopy.scattering.scatterer.spherecluster.Spheres"><tt class="xref py py-class docutils literal"><span class="pre">Spheres</span></tt></a> constructor.</p>
+</div>
+<div class="section" id="coated-spheres">
+<h3>Coated Spheres<a class="headerlink" href="#coated-spheres" title="Permalink to this headline">¶</a></h3>
+<p>Coated (or multilayered) spheres can use the same Mie theory as simple
+spheres. Constructing a coated spheres differs only in specifying a
+list of refractive indices and radii corresponding to the layers
+(starting from the core and working outwards).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">holopy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">Mie</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">ImageSchema</span><span class="p">,</span> <span class="n">Optics</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="n">shape</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+                     <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">,</span>
+                                     <span class="n">polarization</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.59</span><span class="p">,</span> <span class="mf">1.42</span><span class="p">),</span>\
+            <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">))</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">holo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../pyplots/calc_coated_sphere.py">Source code</a>, <a class="reference external" href="../pyplots/calc_coated_sphere.png">png</a>, <a class="reference external" href="../pyplots/calc_coated_sphere.hires.png">hires.png</a>, <a class="reference external" href="../pyplots/calc_coated_sphere.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/calc_coated_sphere.png" src="../_images/calc_coated_sphere.png" />
+</div>
+<p>Additionally, you can use Mie superposition for multiple spheres each
+with multiple layers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Sphere</span><span class="p">,</span> <span class="n">Spheres</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">Mie</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">ImageSchema</span><span class="p">,</span> <span class="n">Optics</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="n">shape</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+                     <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">,</span>
+                                     <span class="n">polarization</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">cs1</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.59</span><span class="p">,</span> <span class="mf">1.42</span><span class="p">),</span> \
+             <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">))</span>
+<span class="n">cs2</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">45</span><span class="p">),</span> <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.59</span><span class="p">,</span> <span class="mf">1.33</span><span class="p">,</span> <span class="mf">1.59</span><span class="p">),</span>\
+             <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="o">.</span><span class="mi">9</span><span class="p">))</span>
+<span class="n">cs3</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.33</span><span class="p">,</span> <span class="mf">1.59</span><span class="p">,</span> <span class="mf">1.34</span><span class="p">),</span>\
+             <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="o">.</span><span class="mi">9</span><span class="p">))</span>
+<span class="n">coatedspheres</span> <span class="o">=</span> <span class="n">Spheres</span><span class="p">([</span><span class="n">cs1</span><span class="p">,</span><span class="n">cs2</span><span class="p">,</span><span class="n">cs3</span><span class="p">])</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">coatedspheres</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The multisphere theory does not yet work with coated spheres.</p>
+</div>
+</div>
+<div class="section" id="ellipsoids">
+<h3>Ellipsoids<a class="headerlink" href="#ellipsoids" title="Permalink to this headline">¶</a></h3>
+<p>You can calculate a hologram of an ellipsoid by using the discrete
+dipole approximation (DDA). This requires first installing <a class="reference external" href="http://code.google.com/p/a-dda/">ADDA</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">DDA</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Ellipsoid</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">ImageSchema</span><span class="p">,</span> <span class="n">Optics</span>
+
+<span class="n">e</span> <span class="o">=</span> <span class="n">Ellipsoid</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">),</span> <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="n">shape</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+                     <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">,</span>
+                                     <span class="n">polarization</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">DDA</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-square-detectors-and-or-pixels">
+<h3>Non-Square Detectors and/or Pixels<a class="headerlink" href="#non-square-detectors-and-or-pixels" title="Permalink to this headline">¶</a></h3>
+<p>The holograms above make use of several default assumptions.  When you
+make an ImageSchema like</p>
+<div class="highlight-python"><pre>schema = ImageSchema(shape = 100, spacing = .1...)</pre>
+</div>
+<p>you are making HoloPy assume a square array of evenly spaced grid
+points. You could have written the same instructions explicitly as:</p>
+<div class="highlight-python"><pre>schema = ImageSchema(shape = (100, 100), spacing = (.1, .1)...)</pre>
+</div>
+<p>If you wanted a rectangular detector with rectangular pixels, you
+could specify that as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="n">spacing</span> <span class="o">=</span> <span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span><span class="o">.</span><span class="mi">2</span><span class="p">),</span> <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="mi">300</span><span class="p">),</span>
+                     <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">,</span>
+                                     <span class="n">polarization</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>Most displays will default to displaying square pixels, but if your
+hologram has an associated spacing (holo.spacing), and you use
+holopy.show(holo) to display the image, your hologram will display
+with pixels of the correct aspect ratio.</p>
+</div>
+<div class="section" id="static-light-scattering-calculations">
+<span id="scattering-matrices"></span><h3>Static light scattering calculations<a class="headerlink" href="#static-light-scattering-calculations" title="Permalink to this headline">¶</a></h3>
+<p>In a static light scattering measurement you record the scattered
+intensity at a number of angles.  In this kind of experiment you are
+usually not interested in the exact distance of the detector from the
+particles, and so it&#8217;s most convenient to work with scattering matrices.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">Angles</span><span class="p">,</span> <span class="n">Optics</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">Mie</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">positions</span> <span class="o">=</span> <span class="n">Angles</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)),</span> <span class="n">optics</span> <span class="o">=</span>
+                <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span><span class="o">=.</span><span class="mi">66</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">,</span> <span class="n">polarization</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+
+<span class="n">sphere</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="p">)</span>
+
+<span class="n">matr</span> <span class="o">=</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_scat_matrix</span><span class="p">(</span><span class="n">sphere</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+<span class="c"># It is typical to look at scattering matrices on a semilog plot.</span>
+<span class="c"># You can make one as follows:</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">matr</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">matr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../pyplots/calc_scat_matr.py">Source code</a>, <a class="reference external" href="../pyplots/calc_scat_matr.png">png</a>, <a class="reference external" href="../pyplots/calc_scat_matr.hires.png">hires.png</a>, <a class="reference external" href="../pyplots/calc_scat_matr.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/calc_scat_matr.png" src="../_images/calc_scat_matr.png" />
+</div>
+<p>Here we omit specifying the location (center) of the scatterer.  This is
+only valid when you&#8217;re calculating a far-field quantity.</p>
+</div>
+<div class="section" id="non-default-theory-parameters">
+<h3>Non-default Theory Parameters<a class="headerlink" href="#non-default-theory-parameters" title="Permalink to this headline">¶</a></h3>
+<p>Some theories like
+<a class="reference internal" href="../reference/holopy.scattering.theory.html#holopy.scattering.theory.multisphere.Multisphere" title="holopy.scattering.theory.multisphere.Multisphere"><tt class="xref py py-class docutils literal"><span class="pre">Multisphere</span></tt></a> have
+adjustable parameters that relate to numerical tolerances.  In general
+our defaults will work fine, but you can adjust them by instantiating
+the theory and calling calc functions on that specific object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">ImageSchema</span><span class="p">,</span> <span class="n">Optics</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Sphere</span><span class="p">,</span> <span class="n">Spheres</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">Multisphere</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">Spheres</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">])</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="n">shape</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+  <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">polarization</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> \
+                  <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">))</span>
+<span class="n">multi</span> <span class="o">=</span> <span class="n">Multisphere</span><span class="p">(</span><span class="n">niter</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">multi</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here we adjusted the maximum number of iterations (<tt class="docutils literal"><span class="pre">niter</span></tt>) used in
+converging the multisphere solution.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="fit_tutorial.html" title="Fitting Models to Data"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="recon_tutorial.html" title="Reconstructing Data (Numerical Propagation)"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="tutorials.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

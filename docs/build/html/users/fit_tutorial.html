@@ -1,0 +1,490 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Fitting Models to Data &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="tutorials.html" />
+    <link rel="next" title="Scattering from Arbitrary Structures with DDA" href="dda_tutorial.html" />
+    <link rel="prev" title="Scattering Calculations" href="calc_tutorial.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dda_tutorial.html" title="Scattering from Arbitrary Structures with DDA"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="calc_tutorial.html" title="Scattering Calculations"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="tutorials.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Fitting Models to Data</a><ul>
+<li><a class="reference internal" href="#a-simple-fit">A Simple Fit</a><ul>
+<li><a class="reference internal" href="#preparing-data">Preparing Data</a></li>
+<li><a class="reference internal" href="#define-a-model">Define a Model</a></li>
+<li><a class="reference internal" href="#run-the-fit">Run the Fit</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fitting-multiple-spheres">Fitting Multiple Spheres</a></li>
+<li><a class="reference internal" href="#fitting-a-time-series-of-images">Fitting a Time Series of Images</a></li>
+<li><a class="reference internal" href="#speeding-up-fits-with-random-subset-fitting">Speeding up Fits with Random Subset Fitting</a></li>
+<li><a class="reference internal" href="#advanced-parameter-specification">Advanced Parameter Specification</a><ul>
+<li><a class="reference internal" href="#complex-index-of-refraction">Complex Index of Refraction</a></li>
+<li><a class="reference internal" href="#tying-parameters">Tying Parameters</a></li>
+<li><a class="reference internal" href="#telling-the-minimizer-more-about-a-parameter">Telling the Minimizer More About a Parameter</a></li>
+<li><a class="reference internal" href="#custom-parametrization">Custom Parametrization</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-a-different-theory">Using a Different Theory</a></li>
+<li><a class="reference internal" href="#using-a-different-minimizer">Using a Different Minimizer</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="calc_tutorial.html"
+                        title="previous chapter">Scattering Calculations</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dda_tutorial.html"
+                        title="next chapter">Scattering from Arbitrary Structures with DDA</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/users/fit_tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="fitting-models-to-data">
+<span id="fit-tutorial"></span><h1>Fitting Models to Data<a class="headerlink" href="#fitting-models-to-data" title="Permalink to this headline">¶</a></h1>
+<p>The most powerful use of HoloPy is to analyze data by fitting a
+scattering model to it.  This provides high precision measurements of
+physical quantities from holographic or other types of data.</p>
+<p>A fit generally consists of the following steps:</p>
+<ol class="arabic simple">
+<li><a class="reference internal" href="#prepare-data"><em>Prepare</em></a> your data for fitting.</li>
+<li><a class="reference internal" href="#define-model"><em>Specify a scattering model</em></a> for the system your
+data was recorded from.</li>
+<li><a class="reference internal" href="#run-fit"><em>Fit</em></a> the model to the data.</li>
+</ol>
+<div class="section" id="a-simple-fit">
+<h2>A Simple Fit<a class="headerlink" href="#a-simple-fit" title="Permalink to this headline">¶</a></h2>
+<p>In the following, we fit for the position, radius, and refractive
+index of a microsphere whose hologram is computed using known values
+of these parameters. Fitting a model to a computed hologram is a
+convenient test, as we know what answer we should get:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">holopy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">ImageSchema</span><span class="p">,</span> <span class="n">Optics</span>
+<span class="kn">from</span> <span class="nn">holopy.fitting</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="n">fit</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">Mie</span>
+
+<span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="n">shape</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">polarization</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">))</span>
+<span class="n">sphere</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">10.3</span><span class="p">),</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.58</span><span class="p">)</span>
+<span class="n">data_holo</span> <span class="o">=</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">sphere</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+
+<span class="n">par_s</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">par</span><span class="p">(</span><span class="n">guess</span> <span class="o">=</span> <span class="mf">5.5</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">10</span><span class="p">]),</span>
+     <span class="n">par</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">]),</span> <span class="n">par</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">])),</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.58</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">par_s</span><span class="p">,</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="n">par</span><span class="p">(</span><span class="o">.</span><span class="mi">6</span><span class="p">,</span> <span class="p">[</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_holo</span><span class="p">)</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;result.yaml&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first few lines import the HoloPy models that are needed to
+compute and fit to holograms:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">ImageSchema</span><span class="p">,</span> <span class="n">Optics</span>
+<span class="kn">from</span> <span class="nn">holopy.fitting</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="n">fit</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">Mie</span>
+</pre></div>
+</div>
+<div class="section" id="preparing-data">
+<span id="prepare-data"></span><h3>Preparing Data<a class="headerlink" href="#preparing-data" title="Permalink to this headline">¶</a></h3>
+<p>Next, we compute the hologram for a microsphere using the same steps
+as those in <a class="reference internal" href="calc_tutorial.html#calc-tutorial"><em>Scattering Calculations</em></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="n">shape</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">polarization</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">))</span>
+<span class="n">sphere</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">10.3</span><span class="p">),</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.58</span><span class="p">)</span>
+<span class="n">data_holo</span> <span class="o">=</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">sphere</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you are working with your own data, it is important to remember to
+normalize the data, since calculations return a normalized result. So
+if you had <tt class="docutils literal"><span class="pre">data.tif</span></tt> and <tt class="docutils literal"><span class="pre">bg.tif</span></tt> you would use something like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">holopy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">Optics</span>
+<span class="kn">from</span> <span class="nn">holopy.core.process</span> <span class="kn">import</span> <span class="n">normalize</span>
+<span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">polarization</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">)</span>
+<span class="n">data_holo</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;data.tif&#39;</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="n">optics</span> <span class="o">=</span> <span class="n">optics</span><span class="p">)</span> <span class="o">/</span>
+                 <span class="n">hp</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;bg.tif&#39;</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="n">optics</span> <span class="o">=</span> <span class="n">optics</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-a-model">
+<span id="define-model"></span><h3>Define a Model<a class="headerlink" href="#define-a-model" title="Permalink to this headline">¶</a></h3>
+<p>Next, we provide initial guesses for the three spatial coordinates
+(<cite>x</cite>, <cite>y</cite>, and <cite>z</cite>, in that order) as bounded variable parameters in
+<tt class="docutils literal"><span class="pre">center</span></tt>.  For instance, the initial guess for the <cite>x</cite> position of
+the scatterer is 5.5 microns and bounded between 4 and 10 microns.
+Guesses for the radius (<tt class="docutils literal"><span class="pre">r</span></tt>) and refractive index of the sphere
+(<tt class="docutils literal"><span class="pre">n</span></tt>) are constant values also included in <tt class="docutils literal"><span class="pre">par_s</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">par_s</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">par</span><span class="p">(</span><span class="n">guess</span> <span class="o">=</span> <span class="mf">5.5</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">10</span><span class="p">]),</span>
+    <span class="n">par</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">]),</span> <span class="n">par</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">])),</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.58</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then this parametrized scatterer, along with a calculation theory, is
+used to define a model:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">par_s</span><span class="p">,</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="n">par</span><span class="p">(</span><span class="o">.</span><span class="mi">6</span><span class="p">,</span> <span class="p">[</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">alpha</span></tt> is an additional fitting parameter first introduced by Lee
+et al. in [Lee2007] (see <a class="reference internal" href="../credits.html#credits"><em>References and credits</em></a> for additional details).</p>
+<p>To see how well the guess in your model lines up with the hologram you
+are fitting to, use</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">guess_holo</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">guess_holo</span><span class="p">(</span><span class="n">data_holo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will compute a hologram with the same dimensions as the data you
+are attempting to fit. This simplest and best way to see what the
+minimizer will be working from when it attempts to fit your hologram.</p>
+</div>
+<div class="section" id="run-the-fit">
+<span id="run-fit"></span><h3>Run the Fit<a class="headerlink" href="#run-the-fit" title="Permalink to this headline">¶</a></h3>
+<p>Once you have all of that set up, running the fit is almost
+trivially simple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_holo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can examine the fitted position in <tt class="docutils literal"><span class="pre">result.scatterer.center</span></tt>. We
+see that the initial guess of the sphere&#8217;s position (5.5, 4.5, 10.0)
+was corrected by the fitter to (5.0,5.0,10.3). Success!</p>
+<p>From the fit,
+<tt class="docutils literal"><span class="pre">result.scatterer</span></tt> gives the scatterer that best matches the hologram,
+<tt class="docutils literal"><span class="pre">result.alpha</span></tt> is the alpha for the best fit.  <tt class="docutils literal"><span class="pre">result.chisq</span></tt> and
+<tt class="docutils literal"><span class="pre">result.rsq</span></tt> are statistical measures of the the goodness of the fit.</p>
+<p>You can also compute a hologram of the final fit result to compare to
+the data with</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">result_holo</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">fitted_holo</span><span class="p">(</span><span class="n">data_holo</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="docutils literal"><span class="pre">result.model</span></tt> and <tt class="docutils literal"><span class="pre">result.minimizer</span></tt> are the Model and
+Minimizer objects used in the fit, and <tt class="docutils literal"><span class="pre">result.minimization_info</span></tt>
+contains any additional information the minimization algorithm
+returned about the minimization procedure (for
+<a class="reference internal" href="../reference/holopy.fitting.html#holopy.fitting.minimizer.Nmpfit" title="holopy.fitting.minimizer.Nmpfit"><tt class="xref py py-class docutils literal"><span class="pre">Nmpfit</span></tt></a> this includes things like
+covariance matrices).  Additional details are included in the
+documentation for <a class="reference internal" href="../reference/holopy.fitting.html#holopy.fitting.fit.FitResult" title="holopy.fitting.fit.FitResult"><tt class="xref py py-class docutils literal"><span class="pre">FitResult</span></tt></a>.</p>
+</div>
+<p>Finally, we save the result with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">hp</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;result.yaml&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This saves all of the information about the fit to a yaml text file.
+These files are reasonably human readable and serve as our archive
+format for data.  They can be loaded back into python with</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">loaded_result</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;result.yaml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="fitting-multiple-spheres">
+<h2>Fitting Multiple Spheres<a class="headerlink" href="#fitting-multiple-spheres" title="Permalink to this headline">¶</a></h2>
+<p>In this example, we fit for the parameters of two spheres</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Spheres</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">Mie</span>
+<span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">ImageSchema</span><span class="p">,</span> <span class="n">Optics</span>
+<span class="kn">from</span> <span class="nn">holopy.fitting</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="n">fit</span>
+
+<span class="c">#calculate a hologram with known particle positions to do a fit against</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="n">shape</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">,</span> <span class="n">polarization</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+
+<span class="n">s1</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">Spheres</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">])</span>
+<span class="n">data_holo</span> <span class="o">=</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+
+<span class="c">#now do the fit</span>
+<span class="n">guess1</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">par</span><span class="p">(</span><span class="n">guess</span> <span class="o">=</span> <span class="mf">15.5</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">25</span><span class="p">]),</span>
+    <span class="n">par</span><span class="p">(</span><span class="mf">14.5</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">]),</span> <span class="n">par</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">])),</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="p">)</span>
+<span class="n">guess2</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">par</span><span class="p">(</span><span class="n">guess</span> <span class="o">=</span> <span class="mf">14.5</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">25</span><span class="p">]),</span>
+    <span class="n">par</span><span class="p">(</span><span class="mf">13.5</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">]),</span> <span class="n">par</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">])),</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="p">)</span>
+<span class="n">par_s</span> <span class="o">=</span> <span class="n">Spheres</span><span class="p">([</span><span class="n">guess1</span><span class="p">,</span><span class="n">guess2</span><span class="p">])</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">par_s</span><span class="p">,</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="n">par</span><span class="p">(</span><span class="o">.</span><span class="mi">6</span><span class="p">,</span> <span class="p">[</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_holo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fitting-a-time-series-of-images">
+<h2>Fitting a Time Series of Images<a class="headerlink" href="#fitting-a-time-series-of-images" title="Permalink to this headline">¶</a></h2>
+<p>If you are taking video holograms (one of the most useful cases), you
+will probably find yourself wanting to fit long timeseries of data.
+This is done with <tt class="xref py py-func docutils literal"><span class="pre">fit_series()</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">ImageSchema</span><span class="p">,</span> <span class="n">Optics</span>
+<span class="kn">from</span> <span class="nn">holopy.fitting</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="n">fit_series</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">Mie</span>
+
+<span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="n">shape</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">optics</span> <span class="o">=</span> <span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span> <span class="o">=</span> <span class="o">.</span><span class="mi">660</span><span class="p">,</span> <span class="n">polarization</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mf">1.33</span><span class="p">))</span>
+<span class="n">sphere1</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">10.3</span><span class="p">),</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.58</span><span class="p">)</span>
+<span class="n">sphere2</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">),</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.58</span><span class="p">)</span>
+<span class="n">data_holos</span> <span class="o">=</span> <span class="p">[</span><span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="n">sphere1</span><span class="p">,</span> <span class="n">sphere2</span><span class="p">)]</span>
+
+<span class="n">par_s</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">par</span><span class="p">(</span><span class="n">guess</span> <span class="o">=</span> <span class="mf">5.5</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">10</span><span class="p">]),</span>
+    <span class="n">par</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">]),</span> <span class="n">par</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">])),</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.58</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">par_s</span><span class="p">,</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="n">par</span><span class="p">(</span><span class="o">.</span><span class="mi">6</span><span class="p">,</span> <span class="p">[</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">fit_series</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_holos</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is very similar to fit a single hologram (and this explanation
+only calls out the differences), except instead we calculate and fit
+two holograms. In the code below we define two spheres with the second
+offset slightly (as if it was moving):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sphere1</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">10.3</span><span class="p">),</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.58</span><span class="p">)</span>
+<span class="n">sphere2</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">),</span> <span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.58</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And then compute two holograms from them using a <a class="reference external" href="http://docs.python.org/2/tutorial/datastructures.html#list-comprehensions">list comprehension</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">data_holos</span> <span class="o">=</span> <span class="p">[</span><span class="n">Mie</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="n">sphere1</span><span class="p">,</span> <span class="n">sphere2</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>And finally, fit the holograms:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">results</span> <span class="o">=</span> <span class="n">fit_series</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_holos</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The results are a list of <a class="reference internal" href="../reference/holopy.fitting.html#holopy.fitting.fit.FitResult" title="holopy.fitting.fit.FitResult"><tt class="xref py py-class docutils literal"><span class="pre">FitResult</span></tt></a> objects.</p>
+</div>
+<div class="section" id="speeding-up-fits-with-random-subset-fitting">
+<h2>Speeding up Fits with Random Subset Fitting<a class="headerlink" href="#speeding-up-fits-with-random-subset-fitting" title="Permalink to this headline">¶</a></h2>
+<p>A hologram usually contains far more information than is needed to
+determine the number of parameters you are interested in. Because of
+this, you can often get a significantly faster fit with no little or
+no loss in accuracy by fitting to only a random fraction of the pixels
+in a hologram.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">use_random_fraction</span><span class="o">=.</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You will want to do some testing to make sure that you still get
+acceptable answers with your data, but our investigations have shown
+that you can frequently use random fractions of .1 or .01 with little
+effect on your results and gain a speedup of 10x or greater.</p>
+</div>
+<div class="section" id="advanced-parameter-specification">
+<h2>Advanced Parameter Specification<a class="headerlink" href="#advanced-parameter-specification" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="complex-index-of-refraction">
+<h3>Complex Index of Refraction<a class="headerlink" href="#complex-index-of-refraction" title="Permalink to this headline">¶</a></h3>
+<p>You can specify a complex index with</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.fitting</span> <span class="kn">import</span> <span class="n">ComplexParameter</span>
+
+<span class="n">Sphere</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">ComplexParameter</span><span class="p">(</span><span class="n">real</span> <span class="o">=</span> <span class="n">par</span><span class="p">(</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">),</span> <span class="n">imag</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This will fit to the real part of index of refraction while holding
+the imaginary part fixed.  You can fit to it as well by specifying
+<tt class="docutils literal"><span class="pre">imag</span> <span class="pre">=</span> <span class="pre">par(1e-4)</span></tt> instead of <tt class="docutils literal"><span class="pre">imag</span> <span class="pre">=</span> <span class="pre">1e-4</span></tt>. In a case like this
+where we are providing a small imaginary part for numerical stability,
+you would not want to fit to it. However fitting to an imaginary index
+component could be useful for a metal particle. Setting the key word argument <tt class="docutils literal"><span class="pre">step</span> <span class="pre">=</span> <span class="pre">0.01</span></tt> specifies the the step size used in calculating
+the numerical derivatives of this parameter. Specifying a small step
+size is often necessary when fitting for an index of refraction.</p>
+</div>
+<div class="section" id="tying-parameters">
+<h3>Tying Parameters<a class="headerlink" href="#tying-parameters" title="Permalink to this headline">¶</a></h3>
+<p>You may desire to fit holograms with <em>tied parameters</em>, in which
+several physical quantities that could be varied independently are
+constrained to have the same (but non-constant) value. A common
+example involves fitting a model to a multi-particle hologram in which
+all of the particles are constrained to have the same refractive
+index, but the index is determined by the fitter.  This may be done by
+defining a Parameter and using it in multiple places</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">n1</span> <span class="o">=</span> <span class="n">par</span><span class="p">(</span><span class="mf">1.59</span><span class="p">)</span>
+<span class="n">sc</span> <span class="o">=</span> <span class="n">Spheres</span><span class="p">([</span><span class="n">Sphere</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">nl</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">par</span><span class="p">(</span><span class="mf">0.5e-6</span><span class="p">),</span> \
+  <span class="n">center</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">])),</span> \
+  <span class="n">Sphere</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">n1</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">par</span><span class="p">(</span><span class="mf">0.5e-6</span><span class="p">),</span> <span class="n">center</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mf">9.</span><span class="p">,</span> <span class="mf">11.</span><span class="p">,</span> <span class="mf">21.</span><span class="p">]))])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="telling-the-minimizer-more-about-a-parameter">
+<h3>Telling the Minimizer More About a Parameter<a class="headerlink" href="#telling-the-minimizer-more-about-a-parameter" title="Permalink to this headline">¶</a></h3>
+<p>If you need to provide information to the minimizer about specific
+parameters (for example a derivative step to nmp fit) you add them to
+the par call as keyword args, for example</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Sphere</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">par</span><span class="p">(</span><span class="mf">1.59</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">step</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">),</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-parametrization">
+<h3>Custom Parametrization<a class="headerlink" href="#custom-parametrization" title="Permalink to this headline">¶</a></h3>
+<p>So far you have been specifying parametrizations of a scatterer by
+directly specifying parameters within the scatterer. This is
+the most convenient method, but sometimes it is not flexible enough.</p>
+<p>If you need more control over how parameters define a scatterer,
+HoloPy provides a lower level interface, the
+<a class="reference internal" href="../reference/holopy.fitting.html#holopy.fitting.model.Parametrization" title="holopy.fitting.model.Parametrization"><tt class="xref py py-class docutils literal"><span class="pre">Parametrization</span></tt></a> class. This allows you to do things like define a
+cluster and fit by rotating it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.fitting</span> <span class="kn">import</span> <span class="n">Parametrization</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">1.59</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">Spheres</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">make_scatterer</span><span class="p">(</span><span class="n">euler_alpha</span><span class="p">,</span> <span class="n">euler_beta</span><span class="p">):</span>
+   <span class="k">return</span> <span class="n">cluster</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">euler_alpha</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="n">euler_beta</span><span class="p">)</span>
+<span class="n">param</span> <span class="o">=</span> <span class="n">Parametrization</span><span class="p">(</span><span class="n">make_scatterer</span><span class="p">,</span>
+  <span class="n">parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">par</span><span class="p">(</span><span class="n">guess</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;euler_alpha&#39;</span><span class="p">),</span>
+  <span class="n">par</span><span class="p">(</span><span class="n">guess</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;euler_beta&#39;</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>Here <tt class="docutils literal"><span class="pre">make_scatterer</span></tt> needs to be a function that takes keyword
+arguments of the names of the parameters and returns a scatterer. In
+this example, that is a function which rotates a reference cluster
+through a given set of angles.</p>
+</div>
+</div>
+<div class="section" id="using-a-different-theory">
+<h2>Using a Different Theory<a class="headerlink" href="#using-a-different-theory" title="Permalink to this headline">¶</a></h2>
+<p>If you are fitting to a cluster of closely spaced spheres, you will
+probably want to use the <a class="reference internal" href="../reference/holopy.scattering.theory.html#holopy.scattering.theory.multisphere.Multisphere" title="holopy.scattering.theory.multisphere.Multisphere"><tt class="xref py py-class docutils literal"><span class="pre">Multisphere</span></tt></a> theory instead of
+Mie. This requires changing only the model from the <a class="reference internal" href="#fitting-multiple-spheres">Fitting Multiple
+Spheres</a> example to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">par_s</span><span class="p">,</span> <span class="n">Multisphere</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="n">par</span><span class="p">(</span><span class="o">.</span><span class="mi">6</span><span class="p">,</span> <span class="p">[</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>HoloPy is not limited to fitting holograms, you can change which
+scattering calculation is used to compare with data. For example when
+fitting against static light scattering data you might use a model
+like one of these:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">parametrization</span><span class="p">,</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_scat_matr</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">parametrization</span><span class="p">,</span> <span class="n">Mie</span><span class="o">.</span><span class="n">calc_scat_intensity</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Technically, you can use any function here as long as it takes a
+scatterer and a <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Schema" title="holopy.core.marray.Schema"><tt class="xref py py-class docutils literal"><span class="pre">Schema</span></tt></a> (and optionally additional keyword
+arguments) as arguments and returns an <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Marray" title="holopy.core.marray.Marray"><tt class="xref py py-class docutils literal"><span class="pre">Marray</span></tt></a> object.</p>
+</div>
+<div class="section" id="using-a-different-minimizer">
+<h2>Using a Different Minimizer<a class="headerlink" href="#using-a-different-minimizer" title="Permalink to this headline">¶</a></h2>
+<p>If you do not provide a minimizer, fits will default to using the
+supplied <a class="reference internal" href="../reference/holopy.fitting.html#holopy.fitting.minimizer.Nmpfit" title="holopy.fitting.minimizer.Nmpfit"><tt class="xref py py-class docutils literal"><span class="pre">Nmpfit</span></tt></a> minimizer with a set of sensible defaults.</p>
+<p>You can choose another minimizer or provide non-default options to a
+minimizer by passing a minimizer object to fit(), for example (to tell
+nmpfit to use looser tolerances and a small iteration limit to get a
+fast result to loosely check things out):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">minimizer</span> <span class="o">=</span> <span class="n">Nmpfit</span><span class="p">(</span><span class="n">ftol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">xtol</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">,</span>
+                                    <span class="n">gtol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>or if you have OpenOpt and DerApproximator installed, you can use to
+use one of OpenOpt&#8217;s minimizers instead:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">minimizer</span> <span class="o">=</span> <span class="n">OpenOpt</span><span class="p">(</span><span class="n">algorithm</span> <span class="o">=</span> <span class="s">&#39;ralg&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dda_tutorial.html" title="Scattering from Arbitrary Structures with DDA"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="calc_tutorial.html" title="Scattering Calculations"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="tutorials.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,177 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>propagation Package &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="holopy Code Reference" href="holopy.html" />
+    <link rel="next" title="scattering Package" href="holopy.scattering.html" />
+    <link rel="prev" title="process Package" href="holopy.core.process.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="holopy.scattering.html" title="scattering Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="holopy.core.process.html" title="process Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" accesskey="U"><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="holopy.core.process.html"
+                        title="previous chapter">process Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="holopy.scattering.html"
+                        title="next chapter">scattering Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/holopy.propagation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-holopy.propagation">
+<span id="propagation-package"></span><h1>propagation Package<a class="headerlink" href="#module-holopy.propagation" title="Permalink to this headline">¶</a></h1>
+<p>Numerical light propagation.</p>
+<p>Computes light propagation from one known set of points to another set
+using the convolution algorithm.</p>
+<p>Propagation is used primarily for one operation:</p>
+<ol class="arabic simple">
+<li><a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> or <a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.VectorGrid" title="holopy.core.marray.VectorGrid"><tt class="xref py py-class docutils literal"><span class="pre">VectorGrid</span></tt></a> (Electric field) =-&gt;
+<a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a>, <a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.Volume" title="holopy.core.marray.Volume"><tt class="xref py py-class docutils literal"><span class="pre">Volume</span></tt></a> or <a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.VectorGrid" title="holopy.core.marray.VectorGrid"><tt class="xref py py-class docutils literal"><span class="pre">VectorGrid</span></tt></a> at
+another position</li>
+</ol>
+<p>holopy.propagate depends on holopy.core</p>
+<dl class="function">
+<dt id="holopy.propagation.convolution_propagation.propagate">
+<tt class="descclassname">holopy.propagation.convolution_propagation.</tt><tt class="descname">propagate</tt><big>(</big><em>data</em>, <em>d</em>, <em>gradient_filter=False</em><big>)</big><a class="headerlink" href="#holopy.propagation.convolution_propagation.propagate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Propagates a hologram along the optical axis</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : <a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> or <a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.VectorGrid" title="holopy.core.marray.VectorGrid"><tt class="xref py py-class docutils literal"><span class="pre">VectorGrid</span></tt></a></p>
+<blockquote>
+<div><p>Hologram to propagate</p>
+</div></blockquote>
+<p><strong>d</strong> : float or list of floats</p>
+<blockquote>
+<div><p>Distance to propagate, in meters, or desired schema.  A list tells to
+propagate to several distances and return the volume</p>
+</div></blockquote>
+<p><strong>gradient_filter</strong> : float</p>
+<blockquote>
+<div><p>For each distance, compute a second propagation a distance
+gradient_filter away and subtract.  This enhances contrast of
+rapidly varying features</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>data</strong> : <a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> or <a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.Volume" title="holopy.core.marray.Volume"><tt class="xref py py-class docutils literal"><span class="pre">Volume</span></tt></a></p>
+<blockquote class="last">
+<div><p>The hologram progagated to a distance d from its current location.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="holopy.scattering.html" title="scattering Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="holopy.core.process.html" title="process Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" ><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

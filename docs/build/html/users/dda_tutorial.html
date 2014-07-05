@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Scattering from Arbitrary Structures with DDA &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="tutorials.html" />
+    <link rel="next" title="Saving and Loading HoloPy Objects" href="io_tutorial.html" />
+    <link rel="prev" title="Fitting Models to Data" href="fit_tutorial.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="io_tutorial.html" title="Saving and Loading HoloPy Objects"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="fit_tutorial.html" title="Fitting Models to Data"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="tutorials.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Scattering from Arbitrary Structures with DDA</a><ul>
+<li><a class="reference internal" href="#defining-the-geometry-of-the-scatterer">Defining the geometry of the scatterer</a></li>
+<li><a class="reference internal" href="#mutiple-materials-a-janus-sphere">Mutiple Materials: A Janus Sphere</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="fit_tutorial.html"
+                        title="previous chapter">Fitting Models to Data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="io_tutorial.html"
+                        title="next chapter">Saving and Loading HoloPy Objects</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/users/dda_tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="scattering-from-arbitrary-structures-with-dda">
+<span id="dda-tutorial"></span><h1>Scattering from Arbitrary Structures with DDA<a class="headerlink" href="#scattering-from-arbitrary-structures-with-dda" title="Permalink to this headline">¶</a></h1>
+<p>The discrete dipole approximation (DDA) lets us calculate scattering
+from any arbitrary object by representing it as a closely packed array
+of point dipoles. In HoloPy you can make use of the DDA by specifying
+a general <a class="reference internal" href="../reference/holopy.scattering.scatterer.html#holopy.scattering.scatterer.Scatterer" title="holopy.scattering.scatterer.Scatterer"><tt class="xref py py-class docutils literal"><span class="pre">Scatterer</span></tt></a> with an indicator function (or set of
+functions for a composite scatterer containing multiple media).</p>
+<p>HoloPy uses <a class="reference external" href="http://code.google.com/p/a-dda/">ADDA</a> to do the actual
+DDA calculations, so you will need to install ADDA and be able to run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">adda</span>
+</pre></div>
+</div>
+<p>at a terminal for HoloPy DDA calculations to succeed.</p>
+<p>A lot of the code associated with DDA is fairly new so be careful;
+there are probably bugs. If you find any, please <a class="reference external" href="https://bugs.launchpad.net/holopy/+filebug">report</a> them.</p>
+<div class="section" id="defining-the-geometry-of-the-scatterer">
+<h2>Defining the geometry of the scatterer<a class="headerlink" href="#defining-the-geometry-of-the-scatterer" title="Permalink to this headline">¶</a></h2>
+<p>To calculate the scattering pattern for an arbitrary object, you first
+need an indicator function which outputs &#8216;True&#8217; if a test coordinate
+lies within your scatterer, and &#8216;False&#8217; if it doesn&#8217;t.</p>
+<p>For example, if you wanted to define a dumbbell consisting of the union
+of two overlapping spheres you could do so like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">Optics</span><span class="p">,</span> <span class="n">ImageSchema</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Scatterer</span><span class="p">,</span> <span class="n">Sphere</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">DDA</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-.</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">.</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="n">Optics</span><span class="p">(</span><span class="o">.</span><span class="mi">66</span><span class="p">,</span> <span class="mf">1.33</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+<span class="n">dumbbell</span> <span class="o">=</span> <span class="n">Scatterer</span><span class="p">(</span><span class="k">lambda</span> <span class="n">point</span><span class="p">:</span> <span class="n">s1</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="ow">or</span> <span class="n">s2</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">point</span><span class="p">),</span>
+                     <span class="mf">1.59</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">DDA</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">dumbbell</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here we take advantage of the fact that Spheres can tell us if a point
+lies inside them. We use <tt class="docutils literal"><span class="pre">s1</span></tt> and <tt class="docutils literal"><span class="pre">s2</span></tt> as purely geometrical
+constructs, so we do not give them indicies of refraction, instead
+specifying n when defining <tt class="docutils literal"><span class="pre">dumbell</span></tt>.</p>
+</div>
+<div class="section" id="mutiple-materials-a-janus-sphere">
+<h2>Mutiple Materials: A Janus Sphere<a class="headerlink" href="#mutiple-materials-a-janus-sphere" title="Permalink to this headline">¶</a></h2>
+<p>You can also provide a set of indicators and indices to define a scatterer
+containing multiple materials. As an example, lets look at a <a class="reference external" href="http://en.wikipedia.org/wiki/Janus_particles">janus
+sphere</a> consisting of
+a plastic sphere with a high index coating on the top half:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.core</span> <span class="kn">import</span> <span class="n">Optics</span><span class="p">,</span> <span class="n">ImageSchema</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Scatterer</span><span class="p">,</span> <span class="n">Sphere</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">Indicators</span>
+<span class="kn">from</span> <span class="nn">holopy.scattering.theory</span> <span class="kn">import</span> <span class="n">DDA</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">51</span><span class="p">,</span> <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">ImageSchema</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="n">Optics</span><span class="p">(</span><span class="o">.</span><span class="mi">66</span><span class="p">,</span> <span class="mf">1.33</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+<span class="k">def</span> <span class="nf">cap</span><span class="p">(</span><span class="n">point</span><span class="p">):</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">s2</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">s1</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">point</span><span class="p">))</span>
+<span class="n">indicators</span> <span class="o">=</span> <span class="n">Indicators</span><span class="p">([</span><span class="n">s1</span><span class="o">.</span><span class="n">contains</span><span class="p">,</span> <span class="n">cap</span><span class="p">],</span>
+                        <span class="p">[[</span><span class="o">-.</span><span class="mi">51</span><span class="p">,</span> <span class="o">.</span><span class="mi">51</span><span class="p">],</span> <span class="p">[</span><span class="o">-.</span><span class="mi">51</span><span class="p">,</span> <span class="o">.</span><span class="mi">51</span><span class="p">],</span> <span class="p">[</span><span class="o">-.</span><span class="mi">51</span><span class="p">,</span> <span class="o">.</span><span class="mi">51</span><span class="p">]])</span>
+<span class="n">janus</span> <span class="o">=</span> <span class="n">Scatterer</span><span class="p">(</span><span class="n">indicators</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.34</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">DDA</span><span class="o">.</span><span class="n">calc_holo</span><span class="p">(</span><span class="n">janus</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We had to manually set up the bounds of the indicator functions here
+because the automatic bounds determination routine gets confused by
+the cap that does not contain the origin.</p>
+<p>We also provide a <tt class="xref py py-class docutils literal"><span class="pre">JanusSphere</span></tt> scatterer which is very
+similar to the scatterer defined above, but can also take a rotation
+angle to specify other orientations:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">holopy.scattering.scatterer</span> <span class="kn">import</span> <span class="n">JanusSphere</span>
+<span class="n">janus</span> <span class="o">=</span> <span class="n">JanusSphere</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.34</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">51</span><span class="p">],</span> <span class="n">rotation</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                  <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="io_tutorial.html" title="Saving and Loading HoloPy Objects"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="fit_tutorial.html" title="Fitting Models to Data"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="tutorials.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,237 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Loading Data &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="tutorials.html" />
+    <link rel="next" title="Reconstructing Data (Numerical Propagation)" href="recon_tutorial.html" />
+    <link rel="prev" title="Tutorials" href="tutorials.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="recon_tutorial.html" title="Reconstructing Data (Numerical Propagation)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tutorials.html" title="Tutorials"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="tutorials.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Loading Data</a><ul>
+<li><a class="reference internal" href="#loading-and-viewing-a-hologram">Loading and viewing a hologram</a></li>
+<li><a class="reference internal" href="#telling-holopy-about-your-experimental-setup">Telling HoloPy about your Experimental Setup</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tutorials.html"
+                        title="previous chapter">Tutorials</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="recon_tutorial.html"
+                        title="next chapter">Reconstructing Data (Numerical Propagation)</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/users/load_tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="loading-data">
+<span id="loading"></span><h1>Loading Data<a class="headerlink" href="#loading-data" title="Permalink to this headline">¶</a></h1>
+<p>HoloPy can work with any kind of image data, but we use it for digital
+holograms, so our tutorials will focus mostly on hologram data.</p>
+<div class="section" id="loading-and-viewing-a-hologram">
+<h2>Loading and viewing a hologram<a class="headerlink" href="#loading-and-viewing-a-hologram" title="Permalink to this headline">¶</a></h2>
+<p>We include a couple of example holograms with HoloPy. Lets start by
+loading and viewing one of them</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">holopy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="kn">from</span> <span class="nn">holopy.core.io</span> <span class="kn">import</span> <span class="n">get_example_data</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">get_example_data</span><span class="p">(</span><span class="s">&#39;image0001.yaml&#39;</span><span class="p">)</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">holo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../pyplots/show_example_holo.py">Source code</a>, <a class="reference external" href="../pyplots/show_example_holo.png">png</a>, <a class="reference external" href="../pyplots/show_example_holo.hires.png">hires.png</a>, <a class="reference external" href="../pyplots/show_example_holo.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/show_example_holo.png" src="../_images/show_example_holo.png" />
+</div>
+<p>But you probably want to look at your data not ours. If you have an
+<tt class="docutils literal"><span class="pre">image.tif</span></tt> in your current directory, you can do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">holopy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;image.tif&#39;</span><span class="p">)</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">holo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>HoloPy can import many different image formats, including TIFF files,
+numpy data format files, and any image format that can be handled by
+the <a class="reference external" href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>.</p>
+<p>If you are able to take an image with the same optical setup but
+without the object of interest, removing that background can usually
+improve the image a lot.  Suppose the background image is saved as
+<tt class="docutils literal"><span class="pre">bg.tif</span></tt>. Then you can divide it out by:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">bg</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;bg.tif&#39;</span><span class="p">)</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">holo</span> <span class="o">/</span> <span class="n">bg</span>
+</pre></div>
+</div>
+<p>where the original image has been replaced with one with the
+background removed. This usually does a fairly good job of correcting
+for nonuniform illumination, dust elsewhere in the optics, and things
+of that sort.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you know numpy, our <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> is a <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/arrays.html">numpy</a> array
+subclass, so you can use all the math numpy provides.  For
+example:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">scipy.ndimage</span>
+<span class="kn">import</span> <span class="nn">scipy.fftpack</span>
+<span class="n">filtered_image</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">uniform_filter</span><span class="p">(</span><span class="n">holo</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">ffted_image</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">fftpack</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">holo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="telling-holopy-about-your-experimental-setup">
+<span id="metadata"></span><h2>Telling HoloPy about your Experimental Setup<a class="headerlink" href="#telling-holopy-about-your-experimental-setup" title="Permalink to this headline">¶</a></h2>
+<p>Simply loading a TIFF won&#8217;t help you analyze your data, since the
+image file generally won&#8217;t tell you where the camera is with respect
+to the light source or how the images were recorded. This additional
+information is referred to as <em class="dfn">metadata</em>, which must be
+included when you do actual calculations on your data.</p>
+<p>In order to be able to do calculations with your data, you will need
+to specify this metadata when you load your image:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">holopy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="n">optics</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Optics</span><span class="p">(</span><span class="n">wavelen</span><span class="o">=.</span><span class="mi">660</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mf">1.33</span><span class="p">,</span>
+                        <span class="n">polarization</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;image.tif&#39;</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>  <span class="n">optics</span> <span class="o">=</span> <span class="n">optics</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Above, we have created an instance of the <a class="reference internal" href="../reference/holopy.core.metadata.html#holopy.core.metadata.Optics" title="holopy.core.metadata.Optics"><tt class="xref py py-class docutils literal"><span class="pre">Optics</span></tt></a> metadata
+class for incident light at 660 nm (.66 micron) (in vacuum)
+propagating in a medium with refractive index 1.33, and with a
+polarization in the x-direction. The pixel spacing of the image is 100
+nm (.1 micron).  You can simulate the effect of adding an objective
+lens in the optical path simply by reducing the specified spacing by
+the magnification factor of the objective:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">magnification</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">holo</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;image.tif&#39;</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="mf">4.0</span><span class="o">/</span><span class="n">magnification</span><span class="p">,</span>
+               <span class="n">optics</span> <span class="o">=</span> <span class="n">optics</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>HoloPy uses the given wavelength and medium refractive
+index to calculate the wavelength in the medium, which
+is available as:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">optics</span><span class="o">.</span><span class="n">med_wavelen</span>
+<span class="mf">0.49624060150375937</span>
+</pre></div>
+</div>
+</div>
+<p>You may have noticed that the very first example loaded a <tt class="docutils literal"><span class="pre">.yaml</span></tt>
+file instead of a tiff image. HoloPy&#8217;s native data format is <tt class="docutils literal"><span class="pre">.yaml</span></tt>
+files which can store all of our metadata. So in that example, we
+provide the metadata in the file. For more information about loading
+and saving HoloPy <tt class="docutils literal"><span class="pre">.yaml</span></tt> files see <a class="reference internal" href="io_tutorial.html#yaml-ref"><em>Saving and Loading HoloPy Objects</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="recon_tutorial.html" title="Reconstructing Data (Numerical Propagation)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tutorials.html" title="Tutorials"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li>
+          <li><a href="tutorials.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

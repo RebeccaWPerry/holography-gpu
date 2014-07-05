@@ -1,0 +1,592 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fitting Package &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="holopy Code Reference" href="holopy.html" />
+    <link rel="next" title="vis Package" href="holopy.vis.html" />
+    <link rel="prev" title="theory Package" href="holopy.scattering.theory.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="holopy.vis.html" title="vis Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="holopy.scattering.theory.html" title="theory Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" accesskey="U"><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">fitting Package</a><ul>
+<li><a class="reference internal" href="#module-holopy.fitting.fit"><tt class="docutils literal"><span class="pre">fit</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-holopy.fitting.parameter"><tt class="docutils literal"><span class="pre">parameter</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-holopy.fitting.model"><tt class="docutils literal"><span class="pre">model</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-holopy.fitting.minimizer"><tt class="docutils literal"><span class="pre">minimizer</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="holopy.scattering.theory.html"
+                        title="previous chapter">theory Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="holopy.vis.html"
+                        title="next chapter">vis Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/holopy.fitting.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-holopy.fitting">
+<span id="fitting-package"></span><h1>fitting Package<a class="headerlink" href="#module-holopy.fitting" title="Permalink to this headline">¶</a></h1>
+<p>Fit models of scattering to data</p>
+<p>Make precision measurements of a scattering system by fitting a model
+of it to data</p>
+<p>The fitting module is used to:</p>
+<ol class="arabic simple">
+<li>Define Scattering Model -&gt; <a class="reference internal" href="#holopy.fitting.model.Model" title="holopy.fitting.model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> object</li>
+<li>Fit model to data -&gt; <a class="reference internal" href="#holopy.fitting.fit.FitResult" title="holopy.fitting.fit.FitResult"><tt class="xref py py-class docutils literal"><span class="pre">FitResult</span></tt></a> object</li>
+<li>Fit model to timeseries -&gt; list of <a class="reference internal" href="#holopy.fitting.fit.FitResult" title="holopy.fitting.fit.FitResult"><tt class="xref py py-class docutils literal"><span class="pre">FitResult</span></tt></a> objects</li>
+</ol>
+<div class="section" id="module-holopy.fitting.fit">
+<span id="fit-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">fit</span></tt> Module<a class="headerlink" href="#module-holopy.fitting.fit" title="Permalink to this headline">¶</a></h2>
+<p>Routines for fitting a hologram to an exact solution</p>
+<dl class="class">
+<dt id="holopy.fitting.fit.FitResult">
+<em class="property">class </em><tt class="descclassname">holopy.fitting.fit.</tt><tt class="descname">FitResult</tt><big>(</big><em>parameters</em>, <em>scatterer</em>, <em>chisq</em>, <em>rsq</em>, <em>converged</em>, <em>time</em>, <em>model</em>, <em>minimizer</em>, <em>minimization_details</em><big>)</big><a class="headerlink" href="#holopy.fitting.fit.FitResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="holopy.core.html#holopy.core.holopy_object.HoloPyObject" title="holopy.core.holopy_object.HoloPyObject"><tt class="xref py py-class docutils literal"><span class="pre">holopy.core.holopy_object.HoloPyObject</span></tt></a></p>
+<p>The results of a fit.</p>
+<p>You should not make objects of this class directly, they will be given to
+you by <a class="reference internal" href="#holopy.fitting.fit.fit" title="holopy.fitting.fit.fit"><tt class="xref py py-func docutils literal"><span class="pre">fit()</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>parameters</strong> : array(float)</p>
+<blockquote>
+<div><p>The fitted values for each parameter</p>
+</div></blockquote>
+<p><strong>scatterer</strong> : <a class="reference internal" href="holopy.scattering.scatterer.html#module-holopy.scattering.scatterer" title="holopy.scattering.scatterer"><tt class="xref py py-mod docutils literal"><span class="pre">scatterer</span></tt></a></p>
+<blockquote>
+<div><p>The best fit scatterer</p>
+</div></blockquote>
+<p><strong>chisq</strong> : float</p>
+<blockquote>
+<div><p>The <span class="math">\(\chi^2\)</span> goodness of fit</p>
+</div></blockquote>
+<p><strong>rsq</strong> : float</p>
+<blockquote>
+<div><p>The <span class="math">\(R^2\)</span> goodness of fit</p>
+</div></blockquote>
+<p><strong>converged</strong> : bool</p>
+<blockquote>
+<div><p>Did the minimizer converge</p>
+</div></blockquote>
+<p><strong>time</strong> : float</p>
+<blockquote>
+<div><p>Time in seconds the fit took</p>
+</div></blockquote>
+<p><strong>minimizer</strong> : <a class="reference internal" href="#holopy.fitting.minimizer.Minimizer" title="holopy.fitting.minimizer.Minimizer"><tt class="xref py py-class docutils literal"><span class="pre">Minimizer</span></tt></a></p>
+<blockquote>
+<div><p>Them minimizer used in the fit</p>
+</div></blockquote>
+<p><strong>minimization_details</strong> : object</p>
+<blockquote class="last">
+<div><p>Additional information returned by the minimizer about the minimization</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="holopy.fitting.fit.FitResult.from_summary">
+<em class="property">classmethod </em><tt class="descname">from_summary</tt><big>(</big><em>summary</em>, <em>scatterer_cls</em><big>)</big><a class="headerlink" href="#holopy.fitting.fit.FitResult.from_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a FitResult from a summary.</p>
+<p>The returned FitResult will be incomplete because summaries do
+not contain all of the minimizer information that full results do</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>summary</strong> : dict</p>
+<blockquote class="last">
+<div><p>A dict as from cls.summary containing information about a fit.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="holopy.fitting.fit.FitResult.summary">
+<tt class="descname">summary</tt><big>(</big><big>)</big><a class="headerlink" href="#holopy.fitting.fit.FitResult.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Put just the essential components of a fit result in a dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.fitting.fit.fit">
+<tt class="descclassname">holopy.fitting.fit.</tt><tt class="descname">fit</tt><big>(</big><em>model</em>, <em>data</em>, <em>minimizer=&lt;class 'holopy.fitting.minimizer.Nmpfit'&gt;</em>, <em>use_random_fraction=None</em><big>)</big><a class="headerlink" href="#holopy.fitting.fit.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>fit a model to some data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>model</strong> : <a class="reference internal" href="#holopy.fitting.model.Model" title="holopy.fitting.model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> object</p>
+<blockquote>
+<div><p>A model describing the scattering system which leads to your data and
+the parameters to vary to fit it to the data</p>
+</div></blockquote>
+<p><strong>data</strong> : <a class="reference internal" href="holopy.core.marray.html#holopy.core.marray.Marray" title="holopy.core.marray.Marray"><tt class="xref py py-class docutils literal"><span class="pre">Marray</span></tt></a> object</p>
+<blockquote>
+<div><p>The data to fit</p>
+</div></blockquote>
+<p><strong>minimizer</strong> : (optional) <a class="reference internal" href="#holopy.fitting.minimizer.Minimizer" title="holopy.fitting.minimizer.Minimizer"><tt class="xref py py-class docutils literal"><span class="pre">Minimizer</span></tt></a></p>
+<blockquote>
+<div><p>The minimizer to use to do the fit</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>result</strong> : <a class="reference internal" href="#holopy.fitting.fit.FitResult" title="holopy.fitting.fit.FitResult"><tt class="xref py py-class docutils literal"><span class="pre">FitResult</span></tt></a></p>
+<blockquote class="last">
+<div><p>an object containing the best fit paramters and information about the fit</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-holopy.fitting.parameter">
+<span id="parameter-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">parameter</span></tt> Module<a class="headerlink" href="#module-holopy.fitting.parameter" title="Permalink to this headline">¶</a></h2>
+<p>Classes for describing free parameters in fitting models</p>
+<dl class="class">
+<dt id="holopy.fitting.parameter.ComplexParameter">
+<em class="property">class </em><tt class="descclassname">holopy.fitting.parameter.</tt><tt class="descname">ComplexParameter</tt><big>(</big><em>real</em>, <em>imag</em>, <em>name=None</em><big>)</big><a class="headerlink" href="#holopy.fitting.parameter.ComplexParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#holopy.fitting.parameter.Parameter" title="holopy.fitting.parameter.Parameter"><tt class="xref py py-class docutils literal"><span class="pre">holopy.fitting.parameter.Parameter</span></tt></a></p>
+<p>A complex free parameter</p>
+<p>ComplexParameters have a real and imaginary part which can (potentially)
+vary separately.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>real, imag</strong> : float or <a class="reference internal" href="#holopy.fitting.parameter.Parameter" title="holopy.fitting.parameter.Parameter"><tt class="xref py py-class docutils literal"><span class="pre">Parameter</span></tt></a></p>
+<blockquote>
+<div><p>The real and imaginary parts of this parameter.  Assign floats to fix
+that portion or parameters to allow it to vary.  The parameters must be
+purely real.  You should omit name&#8217;s for the parameters;
+ComplexParameter will name them</p>
+</div></blockquote>
+<p><strong>name</strong> : string</p>
+<blockquote class="last">
+<div><p>Short descriptive name of the ComplexParameter.  Do not provide this if
+using a ParameterizedScatterer, a name will be assigned based its
+position within the scatterer.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="holopy.fitting.parameter.Parameter">
+<em class="property">class </em><tt class="descclassname">holopy.fitting.parameter.</tt><tt class="descname">Parameter</tt><big>(</big><em>guess=None</em>, <em>limit=None</em>, <em>name=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#holopy.fitting.parameter.Parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="holopy.core.html#holopy.core.holopy_object.HoloPyObject" title="holopy.core.holopy_object.HoloPyObject"><tt class="xref py py-class docutils literal"><span class="pre">holopy.core.holopy_object.HoloPyObject</span></tt></a></p>
+<p>Describe a free parameter in a fitting model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>guess</strong> : (optional) float</p>
+<blockquote>
+<div><p>Your inital guess for this parameter</p>
+</div></blockquote>
+<p><strong>limit</strong> : (optional) float or (float, float)</p>
+<blockquote>
+<div><p>Describe how the minimizer should allow a parameter to vary.  A single
+value here fixes the parameter to that value, a pair limits the
+parameter to  vary between (min, max)</p>
+</div></blockquote>
+<p><strong>name</strong> : (optional) string</p>
+<blockquote>
+<div><p>A short descriptive name of the parameter.  Do not provide this if using
+the parameter in a <tt class="xref py py-class docutils literal"><span class="pre">ParameterizedScatterer</span></tt>, it will assign a
+name based on the Parameter&#8217;s position within the scatterer</p>
+</div></blockquote>
+<p><strong>**kwargs</strong> : varies</p>
+<blockquote class="last">
+<div><p>Additional information made available to the minimizer.  This can be
+used for things like step sizes.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="holopy.fitting.parameter.Parameter.scale">
+<tt class="descname">scale</tt><big>(</big><em>physical</em><big>)</big><a class="headerlink" href="#holopy.fitting.parameter.Parameter.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scales parameters to approximately unity</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><strong>physical: np.array(dtype=float)</strong> :</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><strong>scaled: np.array(dtype=float)</strong> :</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="holopy.fitting.parameter.Parameter.unscale">
+<tt class="descname">unscale</tt><big>(</big><em>scaled</em><big>)</big><a class="headerlink" href="#holopy.fitting.parameter.Parameter.unscale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inverts scale&#8217;s transformation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><strong>scaled: np.array(dtype=float)</strong> :</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><strong>physical: np.array(dtype=float)</strong> :</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="holopy.fitting.parameter.par">
+<tt class="descclassname">holopy.fitting.parameter.</tt><tt class="descname">par</tt><a class="headerlink" href="#holopy.fitting.parameter.par" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#holopy.fitting.parameter.Parameter" title="holopy.fitting.parameter.Parameter"><tt class="xref py py-class docutils literal"><span class="pre">Parameter</span></tt></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-holopy.fitting.model">
+<span id="model-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">model</span></tt> Module<a class="headerlink" href="#module-holopy.fitting.model" title="Permalink to this headline">¶</a></h2>
+<p>Classes for defining models of scattering for fitting</p>
+<dl class="class">
+<dt id="holopy.fitting.model.Model">
+<em class="property">class </em><tt class="descclassname">holopy.fitting.model.</tt><tt class="descname">Model</tt><big>(</big><em>scatterer</em>, <em>theory</em>, <em>alpha=None</em>, <em>use_random_fraction=None</em>, <em>constraints=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#holopy.fitting.model.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="holopy.core.html#holopy.core.holopy_object.HoloPyObject" title="holopy.core.holopy_object.HoloPyObject"><tt class="xref py py-class docutils literal"><span class="pre">holopy.core.holopy_object.HoloPyObject</span></tt></a></p>
+<p>Representation of a model to fit to data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>parameters  :class:`.Paramatrization`</strong> :</p>
+<blockquote>
+<div><p>The parameters which can be varied in this model.</p>
+</div></blockquote>
+<p><strong>theory</strong> : <tt class="xref py py-func docutils literal"><span class="pre">scattering.theory.ScatteringTheory.calc_*()</span></tt></p>
+<blockquote>
+<div><p>The scattering calc function that should be used to compute results for
+comparison with the data</p>
+</div></blockquote>
+<p><strong>alpha</strong> : float or Parameter</p>
+<blockquote>
+<div><p>Extra scaling parameter, hopefully this will be removed by improvements
+in our theory soon.</p>
+</div></blockquote>
+<p><strong>constraints</strong> : function or list of functions</p>
+<blockquote class="last">
+<div><p>One or a list of constraint functions. A constraint function should take
+a scaterer as an argument and return False if you wish to disallow that
+scatterer (usually because it is un-physical for some reason)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="holopy.fitting.model.ParameterizedObject">
+<em class="property">class </em><tt class="descclassname">holopy.fitting.model.</tt><tt class="descname">ParameterizedObject</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#holopy.fitting.model.ParameterizedObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#holopy.fitting.model.Parametrization" title="holopy.fitting.model.Parametrization"><tt class="xref py py-class docutils literal"><span class="pre">holopy.fitting.model.Parametrization</span></tt></a></p>
+<p>Specify parameters for a fit by including them in an object</p>
+<p>Parameters are named automatically from their position in the object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>obj</strong> : <a class="reference internal" href="holopy.scattering.scatterer.html#module-holopy.scattering.scatterer" title="holopy.scattering.scatterer"><tt class="xref py py-mod docutils literal"><span class="pre">scatterer</span></tt></a></p>
+<blockquote class="last">
+<div><p>Object containing parameters specifying any values vary in the fit.  It
+can also include numbers for any fixed values</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="holopy.fitting.model.Parametrization">
+<em class="property">class </em><tt class="descclassname">holopy.fitting.model.</tt><tt class="descname">Parametrization</tt><big>(</big><em>make_scatterer</em>, <em>parameters</em><big>)</big><a class="headerlink" href="#holopy.fitting.model.Parametrization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="holopy.core.html#holopy.core.holopy_object.HoloPyObject" title="holopy.core.holopy_object.HoloPyObject"><tt class="xref py py-class docutils literal"><span class="pre">holopy.core.holopy_object.HoloPyObject</span></tt></a></p>
+<p>Description of free parameters and how to make a scatterer from them</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>make_scatterer</strong> : function</p>
+<blockquote>
+<div><p>A function which should take the Parametrization parameters by name as
+keyword arguments and return a scatterer</p>
+</div></blockquote>
+<p><strong>parameters</strong> : list</p>
+<blockquote class="last">
+<div><p>The list of parameters for this Parametrization</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.fitting.model.limit_overlaps">
+<tt class="descclassname">holopy.fitting.model.</tt><tt class="descname">limit_overlaps</tt><big>(</big><em>fraction=0.1</em><big>)</big><a class="headerlink" href="#holopy.fitting.model.limit_overlaps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for constraint prohibiting overlaps beyond a certain tolerance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>fraction</strong> : float</p>
+<blockquote>
+<div><p>Fraction of the sphere diameter that the spheres should be allowed to
+overlap by</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>constraint</strong> : function (scatterer -&gt; bool)</p>
+<blockquote class="last">
+<div><p>A function which tests scatterers to see if the exceed the specified
+tolerance</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-holopy.fitting.minimizer">
+<span id="minimizer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">minimizer</span></tt> Module<a class="headerlink" href="#module-holopy.fitting.minimizer" title="Permalink to this headline">¶</a></h2>
+<p>Interfaces to minimizers.  Classes here provide a common interface to a variety
+of third party minimizers.</p>
+<dl class="class">
+<dt id="holopy.fitting.minimizer.Minimizer">
+<em class="property">class </em><tt class="descclassname">holopy.fitting.minimizer.</tt><tt class="descname">Minimizer</tt><a class="headerlink" href="#holopy.fitting.minimizer.Minimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="holopy.core.html#holopy.core.holopy_object.HoloPyObject" title="holopy.core.holopy_object.HoloPyObject"><tt class="xref py py-class docutils literal"><span class="pre">holopy.core.holopy_object.HoloPyObject</span></tt></a></p>
+<p>Common interface to all minimizers holopy supports</p>
+<dl class="method">
+<dt id="holopy.fitting.minimizer.Minimizer.minimize">
+<tt class="descname">minimize</tt><big>(</big><em>parameters</em>, <em>cost_func</em><big>)</big><a class="headerlink" href="#holopy.fitting.minimizer.Minimizer.minimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the best solution to an optimization problem</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>parameters</strong> : list of <a class="reference internal" href="#holopy.fitting.parameter.Parameter" title="holopy.fitting.parameter.Parameter"><tt class="xref py py-class docutils literal"><span class="pre">Parameter</span></tt></a> objects</p>
+<blockquote>
+<div><p>Parameters to vary in the model</p>
+</div></blockquote>
+<p><strong>cost_func</strong> : function</p>
+<blockquote class="last">
+<div><p>A function taking parameters as arguments that returns the residual
+for the minimization problem</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="holopy.fitting.minimizer.Nmpfit">
+<em class="property">class </em><tt class="descclassname">holopy.fitting.minimizer.</tt><tt class="descname">Nmpfit</tt><big>(</big><em>quiet=False</em>, <em>ftol=1e-10</em>, <em>xtol=1e-10</em>, <em>gtol=1e-10</em>, <em>damp=0</em>, <em>maxiter=100</em><big>)</big><a class="headerlink" href="#holopy.fitting.minimizer.Nmpfit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#holopy.fitting.minimizer.Minimizer" title="holopy.fitting.minimizer.Minimizer"><tt class="xref py py-class docutils literal"><span class="pre">holopy.fitting.minimizer.Minimizer</span></tt></a></p>
+<p>Levenberg-Marquardt minimizer, from Numpy/Python translation of Craig
+Markwardt&#8217;s mpfit.pro.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>quiet: Boolean</strong> :</p>
+<blockquote>
+<div><p>If True, suppress output on minimizer convergence.</p>
+</div></blockquote>
+<p><strong>ftol: float</strong> :</p>
+<blockquote>
+<div><p>Convergence criterion for minimizer: converges if actual and predicted
+relative reductions in chi squared &lt;= ftol</p>
+</div></blockquote>
+<p><strong>xtol: float</strong> :</p>
+<blockquote>
+<div><p>Convergence criterion for minimizer: converges if relative error between
+two Levenberg-Marquardt iterations is &lt;= xtol</p>
+</div></blockquote>
+<p><strong>gtol: float</strong> :</p>
+<blockquote>
+<div><p>Convergence criterion for minimizer: converges if absolute value of
+cosine of angle between vector of cost function evaluated at current
+solution for minimized parameters and any column of the Jacobian is
+&lt;= gtol</p>
+</div></blockquote>
+<p><strong>damp: float</strong> :</p>
+<blockquote>
+<div><p>If nonzero, residuals larger than damp will be replaced by tanh. See
+nmpfit documentation.</p>
+</div></blockquote>
+<p><strong>maxiter: int</strong> :</p>
+<blockquote class="last">
+<div><p>Maximum number of Levenberg-Marquardt iterations to be performed.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>See nmpfit documentation for further details. Not all functionalities of
+nmpfit are implemented here: in particular, we do not allow analytical
+derivatives of the residual function, which is impractical and/or
+impossible to calculate for holograms. If you want to weight the residuals,
+you need to supply a custom residual function.</p>
+<dl class="method">
+<dt id="holopy.fitting.minimizer.Nmpfit.minimize">
+<tt class="descname">minimize</tt><big>(</big><em>parameters</em>, <em>cost_func</em>, <em>debug=False</em><big>)</big><a class="headerlink" href="#holopy.fitting.minimizer.Nmpfit.minimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the best solution to an optimization problem</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>parameters</strong> : list of <a class="reference internal" href="#holopy.fitting.parameter.Parameter" title="holopy.fitting.parameter.Parameter"><tt class="xref py py-class docutils literal"><span class="pre">Parameter</span></tt></a> objects</p>
+<blockquote>
+<div><p>Parameters to vary in the model</p>
+</div></blockquote>
+<p><strong>cost_func</strong> : function</p>
+<blockquote class="last">
+<div><p>A function taking parameters as arguments that returns the residual
+for the minimization problem</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="holopy.vis.html" title="vis Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="holopy.scattering.theory.html" title="theory Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" ><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

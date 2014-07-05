@@ -1,0 +1,496 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>marray Module &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="core Package" href="holopy.core.html" />
+    <link rel="next" title="metadata Module" href="holopy.core.metadata.html" />
+    <link rel="prev" title="core Package" href="holopy.core.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="holopy.core.metadata.html" title="metadata Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="holopy.core.html" title="core Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" ><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li>
+          <li><a href="holopy.core.html" accesskey="U">core Package</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="holopy.core.html"
+                        title="previous chapter">core Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="holopy.core.metadata.html"
+                        title="next chapter">metadata Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/holopy.core.marray.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-holopy.core.marray">
+<span id="marray-module"></span><h1>marray Module<a class="headerlink" href="#module-holopy.core.marray" title="Permalink to this headline">¶</a></h1>
+<p>Storing measurements and calculated results.  This is done through
+arrays with metadata (Marray and subclasses).  It also includes Schema which
+specifies how results should be computed in an analogous interface to how Marrays are
+specified.</p>
+<dl class="class">
+<dt id="holopy.core.marray.Image">
+<em class="property">class </em><tt class="descclassname">holopy.core.marray.</tt><tt class="descname">Image</tt><big>(</big><em>arr</em>, <em>spacing=None</em>, <em>optics=None</em>, <em>origin=array([ 0.</em>, <em>0.</em>, <em>0.])</em>, <em>metadata={}</em>, <em>dtype=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#holopy.core.marray.Image" title="Permalink to this definition">¶</a></dt>
+<dd><p>2D rectangular grid of measurements or calculations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>arr</strong> : array</p>
+<blockquote>
+<div><p>raw array data/calculations (without metadata)</p>
+</div></blockquote>
+<p><strong>spacing</strong> : array(dtype=float)</p>
+<blockquote>
+<div><p>spacing between values along each axis in the Image</p>
+</div></blockquote>
+<p><strong>optics</strong> : <a class="reference internal" href="holopy.core.metadata.html#holopy.core.metadata.Optics" title="holopy.core.metadata.Optics"><tt class="xref py py-class docutils literal"><span class="pre">Optics</span></tt></a> object</p>
+<blockquote>
+<div><p>Information about the optical train associated with this schema</p>
+</div></blockquote>
+<p><strong>origin</strong> : (float, float, float)</p>
+<blockquote>
+<div><p>Offset for the origin of the space represented by this Schema.</p>
+</div></blockquote>
+<p><strong>dtype</strong> : data-type, optional</p>
+<blockquote class="last">
+<div><p>The desired data-type for the array.  If not given, then
+the type will be determined as the minimum type required
+to hold the objects in the sequence.  This argument can only
+be used to &#8216;upcast&#8217; the array.  For downcasting, use the
+.astype(t) method.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="holopy.core.marray.ImageSchema">
+<em class="property">class </em><tt class="descclassname">holopy.core.marray.</tt><tt class="descname">ImageSchema</tt><big>(</big><em>shape=None</em>, <em>spacing=None</em>, <em>optics=None</em>, <em>origin=array([ 0.</em>, <em>0.</em>, <em>0.])</em>, <em>metadata={}</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#holopy.core.marray.ImageSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Description of a desired Image.</p>
+<p>An ImageSchema contains all of the information needed to calculate an Image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>shape</strong> : tuple(int)</p>
+<blockquote>
+<div><p>shape of the desired Marray object.  Should be a tuple of 1 or more
+integers for  the shape along each axis.</p>
+</div></blockquote>
+<p><strong>spacing</strong> : array(dtype=float)</p>
+<blockquote>
+<div><p>spacing between values along each axis in the ImageSchema</p>
+</div></blockquote>
+<p><strong>optics</strong> : <a class="reference internal" href="holopy.core.metadata.html#holopy.core.metadata.Optics" title="holopy.core.metadata.Optics"><tt class="xref py py-class docutils literal"><span class="pre">Optics</span></tt></a> object</p>
+<blockquote>
+<div><p>Information about the optical train associated with this schema</p>
+</div></blockquote>
+<p><strong>origin</strong> : (float, float, float)</p>
+<blockquote class="last">
+<div><p>Offset for the origin of the space represented by this Schema.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="holopy.core.marray.Marray">
+<em class="property">class </em><tt class="descclassname">holopy.core.marray.</tt><tt class="descname">Marray</tt><big>(</big><em>arr</em>, <em>positions=None</em>, <em>optics=None</em>, <em>origin=array([ 0.</em>, <em>0.</em>, <em>0.])</em>, <em>dtype=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#holopy.core.marray.Marray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic Array with metadata</p>
+<p>You usually should use a more appropriate subclass, raw Marrays are somewhat
+cumbersome to use.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>arr</strong> : array</p>
+<blockquote>
+<div><p>raw array data/calculations (without metadata)</p>
+</div></blockquote>
+<p><strong>positions</strong> : <tt class="xref py py-class docutils literal"><span class="pre">PositionSpecification</span></tt> object</p>
+<blockquote>
+<div><p>Specification of the locations of measurements</p>
+</div></blockquote>
+<p><strong>optics</strong> : <a class="reference internal" href="holopy.core.metadata.html#holopy.core.metadata.Optics" title="holopy.core.metadata.Optics"><tt class="xref py py-class docutils literal"><span class="pre">Optics</span></tt></a> object</p>
+<blockquote>
+<div><p>Information about the optical train associated with this schema</p>
+</div></blockquote>
+<p><strong>origin</strong> : (float, float, float)</p>
+<blockquote>
+<div><p>Offset for the origin of the space represented by this Schema.</p>
+</div></blockquote>
+<p><strong>dtype</strong> : data-type, optional</p>
+<blockquote class="last">
+<div><p>The desired data-type for the array.  If not given, then
+the type will be determined as the minimum type required
+to hold the objects in the sequence.  This argument can only
+be used to &#8216;upcast&#8217; the array.  For downcasting, use the
+.astype(t) method.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="holopy.core.marray.Schema">
+<em class="property">class </em><tt class="descclassname">holopy.core.marray.</tt><tt class="descname">Schema</tt><big>(</big><em>shape=None</em>, <em>positions=None</em>, <em>optics=None</em>, <em>origin=array([ 0.</em>, <em>0.</em>, <em>0.])</em>, <em>metadata={}</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#holopy.core.marray.Schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Most general description of a desired array with metadata</p>
+<p>A Schema contains metadata for an array and a description of what
+data the array should hold. Schema themselves do not contain array
+data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>shape</strong> : tuple(int)</p>
+<blockquote>
+<div><p>shape of the desired Marray object.  Should be a tuple of 1 or more
+integers for  the shape along each axis.</p>
+</div></blockquote>
+<p><strong>positions</strong> : <tt class="xref py py-class docutils literal"><span class="pre">PositionSpecification</span></tt> object</p>
+<blockquote>
+<div><p>Specification of the locations of measurements</p>
+</div></blockquote>
+<p><strong>optics</strong> : <a class="reference internal" href="holopy.core.metadata.html#holopy.core.metadata.Optics" title="holopy.core.metadata.Optics"><tt class="xref py py-class docutils literal"><span class="pre">Optics</span></tt></a> object</p>
+<blockquote>
+<div><p>Information about the optical train associated with this schema</p>
+</div></blockquote>
+<p><strong>origin</strong> : (float, float, float)</p>
+<blockquote class="last">
+<div><p>Offset for the origin of the space represented by this Schema.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="holopy.core.marray.Schema.get_metadata_from">
+<tt class="descname">get_metadata_from</tt><big>(</big><em>schema</em>, <em>prefer_self=True</em><big>)</big><a class="headerlink" href="#holopy.core.marray.Schema.get_metadata_from" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill in the metadata for this schema from another</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>schema</strong> : Schema</p>
+<blockquote>
+<div><p>Other schema from which to get metadata for this one</p>
+</div></blockquote>
+<p><strong>prefer_mine</strong> : Bool</p>
+<blockquote>
+<div><p>If true, use values in self any case they exist and only get values
+from schema where they are absent. If true, overwrite self&#8217;s values
+with those from schema</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>Nothing</strong> : updates in place</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="holopy.core.marray.VectorGrid">
+<em class="property">class </em><tt class="descclassname">holopy.core.marray.</tt><tt class="descname">VectorGrid</tt><big>(</big><em>arr</em>, <em>spacing=None</em>, <em>components=('x'</em>, <em>'y'</em>, <em>'z')</em>, <em>optics=None</em>, <em>origin=array([ 0.</em>, <em>0.</em>, <em>0.])</em>, <em>dtype=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#holopy.core.marray.VectorGrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vector Data on a Rectangular Grid</p>
+<p>{attrs}</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="holopy.core.marray.Volume">
+<em class="property">class </em><tt class="descclassname">holopy.core.marray.</tt><tt class="descname">Volume</tt><big>(</big><em>arr</em>, <em>spacing=None</em>, <em>optics=None</em>, <em>origin=array([ 0.</em>, <em>0.</em>, <em>0.])</em>, <em>metadata={}</em>, <em>dtype=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#holopy.core.marray.Volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>3D rectangular grid of measurements or calculations.</p>
+<p>{attrs}</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="holopy.core.marray.VolumeSchema">
+<em class="property">class </em><tt class="descclassname">holopy.core.marray.</tt><tt class="descname">VolumeSchema</tt><big>(</big><em>shape=None</em>, <em>spacing=None</em>, <em>optics=None</em>, <em>origin=array([ 0.</em>, <em>0.</em>, <em>0.])</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#holopy.core.marray.VolumeSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Description of a desired Volume.</p>
+<p>An VolumeSchema contains all of the information needed to calculate a Volume</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>shape</strong> : tuple(int)</p>
+<blockquote>
+<div><p>shape of the desired Marray object.  Should be a tuple of 1 or more
+integers for  the shape along each axis.</p>
+</div></blockquote>
+<p><strong>spacing</strong> : array(dtype=float)</p>
+<blockquote>
+<div><p>spacing between values along each axis in the VolumeSchema</p>
+</div></blockquote>
+<p><strong>optics</strong> : <a class="reference internal" href="holopy.core.metadata.html#holopy.core.metadata.Optics" title="holopy.core.metadata.Optics"><tt class="xref py py-class docutils literal"><span class="pre">Optics</span></tt></a> object</p>
+<blockquote>
+<div><p>Information about the optical train associated with this schema</p>
+</div></blockquote>
+<p><strong>origin</strong> : (float, float, float)</p>
+<blockquote class="last">
+<div><p>Offset for the origin of the space represented by this Schema.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.marray.arr_like">
+<tt class="descclassname">holopy.core.marray.</tt><tt class="descname">arr_like</tt><big>(</big><em>arr</em>, <em>template=None</em>, <em>**override</em><big>)</big><a class="headerlink" href="#holopy.core.marray.arr_like" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new Marray with metadata like an old one</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>arr</strong> : numpy.ndarray</p>
+<blockquote>
+<div><p>Array data to add metadata to</p>
+</div></blockquote>
+<p><strong>template</strong> : <a class="reference internal" href="#holopy.core.marray.Schema" title="holopy.core.marray.Schema"><tt class="xref py py-class docutils literal"><span class="pre">Schema</span></tt></a> (optional)</p>
+<blockquote>
+<div><p>Marray to copy metadata from. If not given, will be copied from arr
+(probably used in this case for overrides)</p>
+</div></blockquote>
+<p><strong>**override</strong> : kwargs</p>
+<blockquote>
+<div><p>Optional additional keyword args. They will be used to override
+specific metadata</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>res</strong> : <a class="reference internal" href="#holopy.core.marray.Marray" title="holopy.core.marray.Marray"><tt class="xref py py-class docutils literal"><span class="pre">Marray</span></tt></a></p>
+<blockquote class="last">
+<div><p>Marray like template containing data from arr</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.marray.resize">
+<tt class="descclassname">holopy.core.marray.</tt><tt class="descname">resize</tt><big>(</big><em>arr</em>, <em>center=None</em>, <em>extent=None</em>, <em>spacing=None</em><big>)</big><a class="headerlink" href="#holopy.core.marray.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resize and resample an marray</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>arr</strong> : <a class="reference internal" href="#holopy.core.marray.Marray" title="holopy.core.marray.Marray"><tt class="xref py py-class docutils literal"><span class="pre">Marray</span></tt></a></p>
+<blockquote>
+<div><p>Marray to resize</p>
+</div></blockquote>
+<p><strong>center</strong> : array(float) optional</p>
+<blockquote>
+<div><p>Desired center of the new marray. Default is the old center</p>
+</div></blockquote>
+<p><strong>extent</strong> : array(float) optional</p>
+<blockquote>
+<div><p>Desired extent of the new marray. Default is the old extent</p>
+</div></blockquote>
+<p><strong>spacing</strong> : array(float) optional</p>
+<blockquote>
+<div><p>Desired spacing of the new marray. Default is the old spacing</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>arr</strong> : <a class="reference internal" href="#holopy.core.marray.Marray" title="holopy.core.marray.Marray"><tt class="xref py py-class docutils literal"><span class="pre">Marray</span></tt></a></p>
+<blockquote class="last">
+<div><p>Desired cut of arr. Will be a view into the old array unless spacing
+is changed</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.marray.squeeze">
+<tt class="descclassname">holopy.core.marray.</tt><tt class="descname">squeeze</tt><big>(</big><em>arr</em><big>)</big><a class="headerlink" href="#holopy.core.marray.squeeze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turns an NxMx1 array into an NxM array.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.marray.subimage">
+<tt class="descclassname">holopy.core.marray.</tt><tt class="descname">subimage</tt><big>(</big><em>arr</em>, <em>center</em>, <em>shape</em><big>)</big><a class="headerlink" href="#holopy.core.marray.subimage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pick out a region of an image or other array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>arr</strong> : numpy.ndarray</p>
+<blockquote>
+<div><p>The array to subimage</p>
+</div></blockquote>
+<p><strong>center</strong> : tuple of ints</p>
+<blockquote>
+<div><p>The desired center of the region, should have the same number of
+elements as the arr has dimensions</p>
+</div></blockquote>
+<p><strong>shape</strong> : int or tuple of ints</p>
+<blockquote>
+<div><p>Desired shape of the region.  If a single int is given the region will
+be that dimension in along every axis.  Shape should be even</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>sub</strong> : numpy.ndarray or <tt class="xref py py-class docutils literal"><span class="pre">RegularGrid</span></tt> marray object</p>
+<blockquote class="last">
+<div><p>Subset of shape shape centered at center. For marrays, marray.origin
+will be set such that the upper left corner of the output has
+coordinates relative to the input.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.marray.zeros_like">
+<tt class="descclassname">holopy.core.marray.</tt><tt class="descname">zeros_like</tt><big>(</big><em>obj</em>, <em>dtype=None</em><big>)</big><a class="headerlink" href="#holopy.core.marray.zeros_like" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an empty marray with the same shape and metadata as the template.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>obj</strong> : <a class="reference internal" href="#holopy.core.marray.Schema" title="holopy.core.marray.Schema"><tt class="xref py py-class docutils literal"><span class="pre">Schema</span></tt></a></p>
+<blockquote>
+<div><p>Template object (schema or marray)</p>
+</div></blockquote>
+<p><strong>dtype</strong> : <tt class="xref py py-class docutils literal"><span class="pre">numpy.dtype</span></tt></p>
+<blockquote>
+<div><p>Optional argument to override array type</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>arr</strong> : <a class="reference internal" href="#holopy.core.marray.Marray" title="holopy.core.marray.Marray"><tt class="xref py py-class docutils literal"><span class="pre">Marray</span></tt></a></p>
+<blockquote class="last">
+<div><p>Empty (all zeros) marray with shape and metadata copied from obj</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="holopy.core.metadata.html" title="metadata Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="holopy.core.html" title="core Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" ><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li>
+          <li><a href="holopy.core.html" >core Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

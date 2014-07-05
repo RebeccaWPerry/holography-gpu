@@ -1,0 +1,196 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Concepts &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="holopy Code Reference" href="../reference/holopy.html" />
+    <link rel="prev" title="Saving and Loading HoloPy Objects" href="io_tutorial.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../reference/holopy.html" title="holopy Code Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="io_tutorial.html" title="Saving and Loading HoloPy Objects"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" accesskey="U">User Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Concepts</a><ul>
+<li><a class="reference internal" href="#units">Units</a></li>
+<li><a class="reference internal" href="#coordinate-system">Coordinate system</a></li>
+<li><a class="reference internal" href="#rotations-of-scatterers">Rotations of Scatterers</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="io_tutorial.html"
+                        title="previous chapter">Saving and Loading HoloPy Objects</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../reference/holopy.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/users/concepts.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="concepts">
+<h1>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="units">
+<span id="id1"></span><h2>Units<a class="headerlink" href="#units" title="Permalink to this headline">¶</a></h2>
+<p>HoloPy does <strong>not</strong> enforce any particular set of units. As long as
+you are consistent, you can use any set of units, for example pixels,
+meters, or microns.  So if you specify the wavelength of your red imaging
+laser as 658 then all other units (<em>x</em>, <em>y</em>, <em>z</em> position coordinates,
+particle radii, etc.)  must also be specified in nanometers.</p>
+</div>
+<div class="section" id="coordinate-system">
+<span id="id2"></span><h2>Coordinate system<a class="headerlink" href="#coordinate-system" title="Permalink to this headline">¶</a></h2>
+<p>For <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> data (data points arrayed in a
+regular grid in a single plane), HoloPy defaults to placing the
+origin, (0,0), at the top left corner as shown below. The x-axis runs
+vertically down, the y-axis runs horizontally to the right, and the
+z-axis points out of the screen, toward you.  This corresponds to the
+way that images are treated by most computer software.</p>
+<a class="reference internal image-reference" href="../_images/HolopyCoordinateSystem.png"><img alt="Coordinate system used in HoloPy." src="../_images/HolopyCoordinateSystem.png" style="width: 347.1px; height: 330.9px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Using <a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.subimage" title="holopy.core.marray.subimage"><tt class="xref py py-func docutils literal"><span class="pre">subimage()</span></tt></a> changes the origin attribute of an
+<a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Image" title="holopy.core.marray.Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> to be relative to the original input.
+This is particularly relevant for using subimaged images as a
+<a class="reference internal" href="../reference/holopy.core.marray.html#holopy.core.marray.Schema" title="holopy.core.marray.Schema"><tt class="xref py py-class docutils literal"><span class="pre">Schema</span></tt></a> for scattering calculations (such as
+computing holograms): coordinates of
+<a class="reference internal" href="../reference/holopy.scattering.scatterer.html#holopy.scattering.scatterer.Scatterer" title="holopy.scattering.scatterer.Scatterer"><tt class="xref py py-class docutils literal"><span class="pre">Scatterer</span></tt></a> objects need to be specified
+relative to the original image.</p>
+</div>
+<p>In sample space, we choose the z axis so that distances to objects
+from the camera/focal plane are positive (have positive z
+coordinates).  The price we pay for this choice is that the
+propagation direction of the illumination light is then negative.</p>
+<p>More complex detector geometries will define their own origin, or ask
+you to define one.</p>
+</div>
+<div class="section" id="rotations-of-scatterers">
+<h2>Rotations of Scatterers<a class="headerlink" href="#rotations-of-scatterers" title="Permalink to this headline">¶</a></h2>
+<p>Certain scattering calculations in HoloPy require specifying the orientation
+of a scatterer (such as a Janus sphere) relative to the HoloPy coordinate
+system. We do this in the most general way possible by specifying three
+Euler angles and a reference orientation. Rotating a scatterer initially
+in the reference orientation through the three Euler angles <span class="math">\(\alpha\)</span>,
+<span class="math">\(\beta\)</span>, and <span class="math">\(\gamma\)</span> (in the active transformation picture)
+yields the desired orientation. The reference orientation is specified by the
+definition of the scatterer.</p>
+<p>The Euler rotations are performed in the following way:</p>
+<ol class="arabic simple">
+<li>Rotate the scatterer an angle <span class="math">\(\alpha\)</span> about the HoloPy <span class="math">\(z\)</span> axis.</li>
+<li>Rotate the scatterer an angle <span class="math">\(\beta\)</span> about the HoloPy <span class="math">\(y\)</span> axis.</li>
+<li>Rotate the scatterer an angle <span class="math">\(\gamma\)</span> about the HoloPy <span class="math">\(z\)</span> axis.</li>
+</ol>
+<p>The sense of rotation is as follows: each angle is a rotation in the <em>clockwise</em>
+direction about the specified axis, viewed along the positive direction of the axis from
+the origin. This is the usual sense of how rotations are typically defined in math.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../reference/holopy.html" title="holopy Code Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="io_tutorial.html" title="Saving and Loading HoloPy Objects"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="index.html" >User Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

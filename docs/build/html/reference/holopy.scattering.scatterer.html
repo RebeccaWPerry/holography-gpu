@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>scatterer Package &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="scattering Package" href="holopy.scattering.html" />
+    <link rel="next" title="theory Package" href="holopy.scattering.theory.html" />
+    <link rel="prev" title="scattering Package" href="holopy.scattering.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="holopy.scattering.theory.html" title="theory Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="holopy.scattering.html" title="scattering Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" ><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li>
+          <li><a href="holopy.scattering.html" accesskey="U">scattering Package</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">scatterer Package</a><ul>
+<li><a class="reference internal" href="#scatterer-class"><tt class="docutils literal"><span class="pre">Scatterer</span></tt> Class</a></li>
+<li><a class="reference internal" href="#module-holopy.scattering.scatterer.sphere"><tt class="docutils literal"><span class="pre">sphere</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-holopy.scattering.scatterer.ellipsoid"><tt class="docutils literal"><span class="pre">ellipsoid</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-holopy.scattering.scatterer.spherecluster"><tt class="docutils literal"><span class="pre">spherecluster</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-holopy.scattering.scatterer.janus"><tt class="docutils literal"><span class="pre">janus</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="holopy.scattering.html"
+                        title="previous chapter">scattering Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="holopy.scattering.theory.html"
+                        title="next chapter">theory Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/holopy.scattering.scatterer.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-holopy.scattering.scatterer">
+<span id="scatterer-package"></span><h1>scatterer Package<a class="headerlink" href="#module-holopy.scattering.scatterer" title="Permalink to this headline">¶</a></h1>
+<p>Modules for defining different types of scatterers, including
+scattering primitives such as Spheres, and more complex objects such
+as Clusters.</p>
+<div class="section" id="scatterer-class">
+<h2><a class="reference internal" href="#holopy.scattering.scatterer.Scatterer" title="holopy.scattering.scatterer.Scatterer"><tt class="xref py py-class docutils literal"><span class="pre">Scatterer</span></tt></a> Class<a class="headerlink" href="#scatterer-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="holopy.scattering.scatterer.Scatterer">
+<em class="property">class </em><tt class="descclassname">holopy.scattering.scatterer.</tt><tt class="descname">Scatterer</tt><big>(</big><em>indicators</em>, <em>n</em>, <em>location</em><big>)</big><a class="headerlink" href="#holopy.scattering.scatterer.Scatterer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for scatterers</p>
+<dl class="method">
+<dt id="holopy.scattering.scatterer.Scatterer.in_domain">
+<tt class="descname">in_domain</tt><big>(</big><em>points</em><big>)</big><a class="headerlink" href="#holopy.scattering.scatterer.Scatterer.in_domain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tell which domain of a scatterer points are in</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>domain</strong> : np.ndarray (N)</p>
+<blockquote class="last">
+<div><p>The domain of each point. Domain 0 means not in the particle</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="holopy.scattering.scatterer.Scatterer.translated">
+<tt class="descname">translated</tt><big>(</big><em>x</em>, <em>y</em>, <em>z</em><big>)</big><a class="headerlink" href="#holopy.scattering.scatterer.Scatterer.translated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a copy of this scatterer translated to a new location</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>x, y, z</strong> : float</p>
+<blockquote>
+<div><p>Value of the translation along each axis</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>translated</strong> : Scatterer</p>
+<blockquote class="last">
+<div><p>A copy of this scatterer translated to a new location</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="holopy.scattering.scatterer.Scatterer.voxelate">
+<tt class="descname">voxelate</tt><big>(</big><em>spacing</em>, <em>medium_index=0</em><big>)</big><a class="headerlink" href="#holopy.scattering.scatterer.Scatterer.voxelate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represent a scatterer by discretizing into voxels</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>spacing</strong> : float</p>
+<blockquote>
+<div><p>The spacing between voxels in the returned voxelation</p>
+</div></blockquote>
+<p><strong>medium_index</strong> : float</p>
+<blockquote>
+<div><p>The background index of refraction to fill in at regions where the
+scatterer is not present</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>voxelation</strong> : np.ndarray</p>
+<blockquote class="last">
+<div><p>An array with refractive index at every pixel</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-holopy.scattering.scatterer.sphere">
+<span id="sphere-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">sphere</span></tt> Module<a class="headerlink" href="#module-holopy.scattering.scatterer.sphere" title="Permalink to this headline">¶</a></h2>
+<p>Defines Sphere, a scattering primitive</p>
+<dl class="class">
+<dt id="holopy.scattering.scatterer.sphere.LayeredSphere">
+<em class="property">class </em><tt class="descclassname">holopy.scattering.scatterer.sphere.</tt><tt class="descname">LayeredSphere</tt><big>(</big><em>n=None</em>, <em>t=None</em>, <em>center=None</em><big>)</big><a class="headerlink" href="#holopy.scattering.scatterer.sphere.LayeredSphere" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#holopy.scattering.scatterer.sphere.Sphere" title="holopy.scattering.scatterer.sphere.Sphere"><tt class="xref py py-class docutils literal"><span class="pre">holopy.scattering.scatterer.sphere.Sphere</span></tt></a></p>
+<p>Alternative description of a sphere where you specify layer
+thicknesses instead of radii</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"><p class="first"><strong>n</strong> : list of complex</p>
+<blockquote>
+<div><p>Index of each each layer</p>
+</div></blockquote>
+<p><strong>t</strong> : list of complex</p>
+<blockquote>
+<div><p>Thickness of each layer</p>
+</div></blockquote>
+<p><strong>center</strong> : length 3 listlike</p>
+<blockquote class="last">
+<div><p>specifies coordinates of center of sphere</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="holopy.scattering.scatterer.sphere.Sphere">
+<em class="property">class </em><tt class="descclassname">holopy.scattering.scatterer.sphere.</tt><tt class="descname">Sphere</tt><big>(</big><em>n=None</em>, <em>r=0.5</em>, <em>center=None</em><big>)</big><a class="headerlink" href="#holopy.scattering.scatterer.sphere.Sphere" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">holopy.scattering.scatterer.scatterer.CenteredScatterer</span></tt></p>
+<p>Contains optical and geometrical properties of a sphere, a
+scattering primitive.</p>
+<p>This can be a multiple layered sphere by making r and n lists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"><p class="first"><strong>n</strong> : complex or list of complex</p>
+<blockquote>
+<div><p>index of refraction of each layer of the sphere</p>
+</div></blockquote>
+<p><strong>r</strong> : float or list of float</p>
+<blockquote>
+<div><p>radius of the sphere or outer radius of each sphere.</p>
+</div></blockquote>
+<p><strong>center</strong> : length 3 listlike</p>
+<blockquote class="last">
+<div><p>specifies coordinates of center of sphere</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-holopy.scattering.scatterer.ellipsoid">
+<span id="ellipsoid-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">ellipsoid</span></tt> Module<a class="headerlink" href="#module-holopy.scattering.scatterer.ellipsoid" title="Permalink to this headline">¶</a></h2>
+<p>Defines ellipsoidal scatterers.</p>
+<dl class="class">
+<dt id="holopy.scattering.scatterer.ellipsoid.Ellipsoid">
+<em class="property">class </em><tt class="descclassname">holopy.scattering.scatterer.ellipsoid.</tt><tt class="descname">Ellipsoid</tt><big>(</big><em>n=None</em>, <em>r=None</em>, <em>center=None</em><big>)</big><a class="headerlink" href="#holopy.scattering.scatterer.ellipsoid.Ellipsoid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">holopy.scattering.scatterer.scatterer.CenteredScatterer</span></tt></p>
+<p>Scattering object representing ellipsoidal scatterers</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>n</strong> : complex</p>
+<blockquote>
+<div><p>Index of refraction</p>
+</div></blockquote>
+<p><strong>r</strong> : float or (float, float, float)</p>
+<blockquote>
+<div><p>x, y, z semi-axes of the ellipsoid</p>
+</div></blockquote>
+<p><strong>center</strong> : 3-tuple, list or numpy array</p>
+<blockquote class="last">
+<div><p>specifies coordinates of center of the scatterer</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-holopy.scattering.scatterer.spherecluster">
+<span id="spherecluster-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">spherecluster</span></tt> Module<a class="headerlink" href="#module-holopy.scattering.scatterer.spherecluster" title="Permalink to this headline">¶</a></h2>
+<p>Defines Spheres, a Scatterers scatterer consisting of Spheres</p>
+<dl class="class">
+<dt id="holopy.scattering.scatterer.spherecluster.Spheres">
+<em class="property">class </em><tt class="descclassname">holopy.scattering.scatterer.spherecluster.</tt><tt class="descname">Spheres</tt><big>(</big><em>scatterers</em>, <em>warn=True</em><big>)</big><a class="headerlink" href="#holopy.scattering.scatterer.spherecluster.Spheres" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">holopy.scattering.scatterer.composite.Scatterers</span></tt></p>
+<p>Contains optical and geometrical properties of a cluster of spheres.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"><p class="first"><strong>spheres</strong> : list of Spheres</p>
+<blockquote class="last">
+<div><p>Spheres which will make up the cluster</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-holopy.scattering.scatterer.janus">
+<span id="janus-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">janus</span></tt> Module<a class="headerlink" href="#module-holopy.scattering.scatterer.janus" title="Permalink to this headline">¶</a></h2>
+<p>Defines a janus sphere as a scattering primitive</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="holopy.scattering.theory.html" title="theory Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="holopy.scattering.html" title="scattering Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" ><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li>
+          <li><a href="holopy.scattering.html" >scattering Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

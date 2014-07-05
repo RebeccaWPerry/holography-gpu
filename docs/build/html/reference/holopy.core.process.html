@@ -1,0 +1,439 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>process Package &mdash; HoloPy 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HoloPy 2.0.0 documentation" href="../index.html" />
+    <link rel="up" title="core Package" href="holopy.core.html" />
+    <link rel="next" title="propagation Package" href="holopy.propagation.html" />
+    <link rel="prev" title="Math Module" href="holopy.core.math.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/logo.png" border="0" alt="HoloPy"/></a> HoloPy
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="holopy.propagation.html" title="propagation Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="holopy.core.math.html" title="Math Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" ><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li>
+          <li><a href="holopy.core.html" accesskey="U">core Package</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">process Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">process</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-holopy.core.process.centerfinder"><tt class="docutils literal"><span class="pre">centerfinder</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-holopy.core.process.enhance"><tt class="docutils literal"><span class="pre">enhance</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-holopy.core.process.filter"><tt class="docutils literal"><span class="pre">filter</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="holopy.core.math.html"
+                        title="previous chapter">Math Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="holopy.propagation.html"
+                        title="next chapter">propagation Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/holopy.core.process.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="process-package">
+<h1>process Package<a class="headerlink" href="#process-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">process</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-holopy.core.process"></span><p>Routines for image processing.  Useful for pre-processing raw
+holograms prior to extracting final data or post-processing
+reconstructions.</p>
+</div>
+<div class="section" id="module-holopy.core.process.centerfinder">
+<span id="centerfinder-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">centerfinder</span></tt> Module<a class="headerlink" href="#module-holopy.core.process.centerfinder" title="Permalink to this headline">¶</a></h2>
+<p>The centerfinder module is a group of functions for locating the
+centers of holographic ring patterns. The module can find the center
+of a single-sphere holographic pattern, a dimer holographic pattern,
+or the centers of multiple (well-separated: clearly separate ring 
+patterns with separate centers) single spheres or dimers. The intended 
+use is for determining an initial parameter guess for hologram fitting.</p>
+<p>We thank the Grier Group at NYU for suggesting the use of the Hough 
+transform. For their independent implementation of a Hough-based 
+holographic feature detection algorithm, see:
+<a class="reference external" href="http://physics.nyu.edu/grierlab/software/circletransform.pro">http://physics.nyu.edu/grierlab/software/circletransform.pro</a>
+For a case study and further reading, see:
+F. C. Cheong, B. Sun, R. Dreyfus, J. Amato-Grill, K. Xiao, L. Dixon
+&amp; D. G. Grier, Flow visualization and flow cytometry with holographic 
+video microscopy, Optics Express 17, 13071-13079 (2009).</p>
+<dl class="function">
+<dt id="holopy.core.process.centerfinder.center_find">
+<tt class="descclassname">holopy.core.process.centerfinder.</tt><tt class="descname">center_find</tt><big>(</big><em>image</em>, <em>centers=1</em>, <em>threshold=0.5</em><big>)</big><a class="headerlink" href="#holopy.core.process.centerfinder.center_find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the coordinates of the center of a holographic pattern.
+The coordinates returned are in pixels (row number, column
+number). Intended for finding the center of single particle or
+dimer holograms which basically show concentric circles. The
+optional threshold parameter (between 0 and 1) gives a bound on
+what magnitude of gradients to include in the calculation. For
+example, threshold=.75 means ignore any gradients that are less
+than 75% of the maximum gradient in the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>image</strong> : ndarray</p>
+<blockquote>
+<div><p>image to find the center(s) in</p>
+</div></blockquote>
+<p><strong>centers</strong> : int</p>
+<blockquote>
+<div><p>number of centers to find</p>
+</div></blockquote>
+<p><strong>threshold</strong> : float (optional)</p>
+<blockquote>
+<div><p>fraction of the maximum gradient below which all
+other gradients will be ignored (range 0-.99)</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>res</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>row(s) and column(s) of center(s)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>When scale is close to 1, the code will run quickly but may lack
+accuracy. When scale is set to 0, the gradient at all pixels will
+contribute to finding the centers and the code will take a little
+bit longer.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.process.centerfinder.hough">
+<tt class="descclassname">holopy.core.process.centerfinder.</tt><tt class="descname">hough</tt><big>(</big><em>col_deriv</em>, <em>row_deriv</em>, <em>centers=1</em>, <em>threshold=0.25</em><big>)</big><a class="headerlink" href="#holopy.core.process.centerfinder.hough" title="Permalink to this definition">¶</a></dt>
+<dd><p>Following the approach of a Hough transform, finds the pixel which
+the most gradients point towards or away from. Uses only gradients
+with magnitudes greater than threshold*maximum gradient. Once the
+pixel is found, uses a brightness-weighted average around that
+pixel to refine the center location to return. After the first
+center is found, the sourrounding area is blocked out and another
+brightest pixel is searched for if more centers are required.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>col_deriv</strong> : numpy.ndarray</p>
+<blockquote>
+<div><p>y-component of image intensity gradient</p>
+</div></blockquote>
+<p><strong>row_deriv</strong> : numpy.ndarray</p>
+<blockquote>
+<div><p>x-component of image intensity gradient</p>
+</div></blockquote>
+<p><strong>centers</strong> : int</p>
+<blockquote>
+<div><p>number of centers to find</p>
+</div></blockquote>
+<p><strong>threshold</strong> : float (optional)</p>
+<blockquote>
+<div><p>fraction of the maximum gradient below which all
+other gradients will be ignored (range 0-.99)</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>res</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>row and column of center or centers</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.process.centerfinder.image_gradient">
+<tt class="descclassname">holopy.core.process.centerfinder.</tt><tt class="descname">image_gradient</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#holopy.core.process.centerfinder.image_gradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the Sobel operator as a numerical approximation of a
+derivative to find the x and y components of the image&#8217;s intensity
+gradient at each pixel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>image</strong> : ndarray</p>
+<blockquote>
+<div><p>image to find the gradient of</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>gradx</strong> : ndarray</p>
+<blockquote>
+<div><p>x-components of intensity gradient</p>
+</div></blockquote>
+<p><strong>grady</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>y-components of intensity gradient</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-holopy.core.process.enhance">
+<span id="enhance-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">enhance</span></tt> Module<a class="headerlink" href="#module-holopy.core.process.enhance" title="Permalink to this headline">¶</a></h2>
+<p>Image enhancement through background subtraction, contrast adjustment,
+or detrending</p>
+<dl class="function">
+<dt id="holopy.core.process.enhance.background">
+<tt class="descclassname">holopy.core.process.enhance.</tt><tt class="descname">background</tt><big>(</big><em>holo</em>, <em>bg</em>, <em>kind=1</em><big>)</big><a class="headerlink" href="#holopy.core.process.enhance.background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Improve an image by eliminating a background.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>holo</strong> : <tt class="xref py py-class docutils literal"><span class="pre">holopy.hologram.Hologram</span></tt></p>
+<blockquote>
+<div><p>Image to process</p>
+</div></blockquote>
+<p><strong>bg</strong> : ndarray</p>
+<blockquote>
+<div><p>Background image to remove</p>
+</div></blockquote>
+<p><strong>kind</strong> : &#8216;subtract&#8217; or &#8216;divide&#8217;</p>
+<blockquote>
+<div><p>Type of background elimination to perform</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>holo</strong> : <tt class="xref py py-class docutils literal"><span class="pre">holopy.hologram.Hologram</span></tt></p>
+<blockquote class="last">
+<div><p>Hologram with background eliminated</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.process.enhance.detrend">
+<tt class="descclassname">holopy.core.process.enhance.</tt><tt class="descname">detrend</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#holopy.core.process.enhance.detrend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove linear trends from an image.</p>
+<p>Performs a 2 axis linear detrend using scipy.signal.detrend</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>image</strong> : ndarray</p>
+<blockquote>
+<div><p>Image to process</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>image</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>Image with linear trends removed</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.process.enhance.normalize">
+<tt class="descclassname">holopy.core.process.enhance.</tt><tt class="descname">normalize</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#holopy.core.process.enhance.normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize an image (NumPy array) by dividing by the pixel average.
+This gives the image a mean value of 1.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>image</strong> : ndarray</p>
+<blockquote>
+<div><p>The array to normalize</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>normalized_image</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>The normalized image</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-holopy.core.process.filter">
+<span id="filter-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">filter</span></tt> Module<a class="headerlink" href="#module-holopy.core.process.filter" title="Permalink to this headline">¶</a></h2>
+<p>Various kinds of image filtering operations</p>
+<dl class="function">
+<dt id="holopy.core.process.filter.lowpass">
+<tt class="descclassname">holopy.core.process.filter.</tt><tt class="descname">lowpass</tt><big>(</big><em>im</em>, <em>n</em>, <em>ny=None</em><big>)</big><a class="headerlink" href="#holopy.core.process.filter.lowpass" title="Permalink to this definition">¶</a></dt>
+<dd><p>blurs the image by convolving with a gaussian kernel of typical
+size n. The optional keyword argument ny allows for a different
+size in the y direction.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.process.filter.pillbox">
+<tt class="descclassname">holopy.core.process.filter.</tt><tt class="descname">pillbox</tt><big>(</big><em>image</em>, <em>rad</em>, <em>optics=None</em><big>)</big><a class="headerlink" href="#holopy.core.process.filter.pillbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do a convolution-based low pass filter with a circular mask</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>image</strong> : ndarray</p>
+<blockquote>
+<div><p>Image to filter (assumed square)</p>
+</div></blockquote>
+<p><strong>rad</strong> : int</p>
+<blockquote>
+<div><p>maximum radius of lowpass filter mask, in pixels</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>image</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>Low pass filtered image</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="holopy.core.process.filter.zero_filter">
+<tt class="descclassname">holopy.core.process.filter.</tt><tt class="descname">zero_filter</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#holopy.core.process.filter.zero_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for and interpolate pixels equal to 0.
+This is to avoid NaN&#8217;s when a hologram is divided by a BG with 0&#8217;s.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>image</strong> : ndarray</p>
+<blockquote>
+<div><p>Image to process</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>image</strong> : ndimage</p>
+<blockquote class="last">
+<div><p>Image where pixels = 0 are instead given values equal to average of
+neighbors.  dtype is the same as the input image</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="holopy.propagation.html" title="propagation Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="holopy.core.math.html" title="Math Module"
+             >previous</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="holopy.html" ><tt class="docutils literal"><span class="pre">holopy</span></tt> Code Reference</a> &raquo;</li>
+          <li><a href="holopy.core.html" >core Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Manoharan Lab, Harvard University.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
