@@ -67,9 +67,10 @@ class Holo(QtGui.QWidget):
 
         #to display syntax of sphere and schema
         spheretitle = QtGui.QLabel()
-        spheretitle.setText('Holopy Scatterer Syntax:')
+        spheretitle.setText('HoloPy Scatterer Syntax:')
         spheretitle.setStyleSheet('font-weight:bold')
         spheretitle.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeft)
+
         self.sphObject = QtGui.QLabel(self)
         self.sphObject.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeft)
         self.sphObject.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
@@ -105,8 +106,6 @@ class Holo(QtGui.QWidget):
         self.maxz_diameters = 398 #actually the range, two less than the maximum, in units of radii
 
         #schema adjustment controls
-        schemacontrol = QtGui.QHBoxLayout()
-
         width = QtGui.QLabel(self)
         width.setText('Width (px):')
         self.widthText = QtGui.QLineEdit(self)
@@ -387,7 +386,6 @@ class Holo(QtGui.QWidget):
         self.reconstruct.clicked.connect(self.setuprecon)
         self.reconstruct.clicked.connect(self.calculateHologram)
 
-
         theories = QtGui.QButtonGroup(self)
         theories.addButton(self.gpu)
         theories.addButton(self.cpu)
@@ -404,141 +402,71 @@ class Holo(QtGui.QWidget):
         #GUI LAYOUT
         #################
 
+        #helper functions from Thomas G. Dimiduk, from Camera-Controller
+        def make_VBox(items, parent=None):
+            return fill_layout(QtGui.QVBoxLayout(parent), items)
+
+        def make_HBox(items, parent=None):
+            return fill_layout(QtGui.QHBoxLayout(parent), items)
+
+        def fill_layout(layout, items):
+            for item in items:
+                if isinstance(item, int):
+                    layout.addStretch(item)
+                elif isinstance(item, QtGui.QBoxLayout):
+                    layout.addLayout(item)
+                else:
+                    if isinstance(item, basestring):
+                        item = make_label(item)
+                    layout.addWidget(item)
+            return layout
+
+
         #number of spheres check box
         hbox0a = QtGui.QHBoxLayout()
         hbox0a.addWidget(self.onesphere)
         hbox0a.addWidget(self.twospheres)
         hbox0a.addStretch(1)
 
-        #xcontroller
-        hbox0 = QtGui.QHBoxLayout()
-        hbox0.addWidget(x)
-        vbox0 = QtGui.QVBoxLayout()
-        vbox0.addWidget(self.lcd)
-        vbox0.addWidget(self.sld)
-        hbox0.addLayout(vbox0)
+        #controllers for x, y, z
+        hbox0 = make_HBox([x, make_VBox([self.lcd,self.sld])])
+        hbox1 = make_HBox([y, make_VBox([self.lcd2,self.sld2])])
+        hbox2 = make_HBox([z, make_VBox([self.lcd3,self.sld3])])
 
-        #ycontroller
-        hbox1 = QtGui.QHBoxLayout()
-        hbox1.addWidget(y)
-        vbox1 = QtGui.QVBoxLayout()
-        vbox1.addWidget(self.lcd2)
-        vbox1.addWidget(self.sld2)
-        hbox1.addLayout(vbox1)
-
-        #zcontrol
-        hbox2 = QtGui.QHBoxLayout()
-        hbox2.addWidget(z)
-        vbox2 = QtGui.QVBoxLayout()
-        vbox2.addWidget(self.lcd3)
-        vbox2.addWidget(self.sld3)
-        hbox2.addLayout(vbox2)
-
-        #radius control
-        hbox3 = QtGui.QHBoxLayout()
-        hbox3.addStretch(1)
-        hbox3.addWidget(radius)
-        vbox3 = QtGui.QVBoxLayout()
-        vbox3.addWidget(self.lcd4)
-        vbox3.addWidget(self.sld4)
-        hbox3.addLayout(vbox3)
-        hbox3.addStretch(1)
-
-        #index control
-        hbox4 = QtGui.QHBoxLayout()
-        hbox4.addStretch(1)
-        hbox4.addWidget(index)
-        vbox4 = QtGui.QVBoxLayout()
-        vbox4.addWidget(self.lcd5)
-        vbox4.addWidget(self.sld5)
-        hbox4.addLayout(vbox4)
-        hbox4.addStretch(1)
-
-        hbox5 = QtGui.QHBoxLayout()
-        hbox5.addWidget(self.gpu)
-        hbox5.addWidget(self.cpu)
-        hbox5.addWidget(self.multisphere)
-        hbox5.addWidget(self.reconstruct)
-
-        #xcontroller
-        hbox7 = QtGui.QHBoxLayout()
-        hbox7.addWidget(self.x2)
-        vbox7 = QtGui.QVBoxLayout()
-        vbox7.addWidget(self.lcd7)
-        vbox7.addWidget(self.sld7)
-        hbox7.addLayout(vbox7)
-
-        #ycontroller
-        hbox8 = QtGui.QHBoxLayout()
-        hbox8.addWidget(self.y2)
-        vbox8 = QtGui.QVBoxLayout()
-        vbox8.addWidget(self.lcd8)
-        vbox8.addWidget(self.sld8)
-        hbox8.addLayout(vbox8)
-
-        #zcontrol
-        hbox9 = QtGui.QHBoxLayout()
-        hbox9.addWidget(self.z2)
-        vbox9 = QtGui.QVBoxLayout()
-        vbox9.addWidget(self.lcd9)
-        vbox9.addWidget(self.sld9)
-        hbox9.addLayout(vbox9)
-
-        #timer
-        hbox6 = QtGui.QHBoxLayout()
-        hbox6.addStretch(1)
-        hbox6.addWidget(self.timer)
+        #controllers for x2, y2, z2
+        hbox7 = make_HBox([self.x2, make_VBox([self.lcd7,self.sld7])])
+        hbox8 = make_HBox([self.y2, make_VBox([self.lcd8,self.sld8])])
+        hbox9 = make_HBox([self.z2, make_VBox([self.lcd9,self.sld9])])
 
         #groups the matching parameters for each sphere together
-        hbox_xs = QtGui.QHBoxLayout()
-        hbox_xs.addLayout(hbox0)
-        hbox_xs.addLayout(hbox7)
-        hbox_ys = QtGui.QHBoxLayout()
-        hbox_ys.addLayout(hbox1)
-        hbox_ys.addLayout(hbox8)
-        hbox_zs = QtGui.QHBoxLayout()
-        hbox_zs.addLayout(hbox2)
-        hbox_zs.addLayout(hbox9)
+        hbox_xs = make_HBox([hbox0,hbox7])
+        hbox_ys = make_HBox([hbox1,hbox8])
+        hbox_zs = make_HBox([hbox2,hbox9])
+
+        #controllers for radius and index
+        hbox3 = make_HBox([1, radius, make_VBox([self.lcd4,self.sld4]), 1])
+        hbox4 = make_HBox([1, index, make_VBox([self.lcd5,self.sld5]), 1])
+
+        #theory selector
+        hbox5 = make_HBox([self.gpu, self.cpu, self.multisphere, self.reconstruct])
+
+        #timer
+        hbox6 = make_HBox([1, self.timer])
 
         #put all the parameter adjustment buttons together
-        vbox = QtGui.QVBoxLayout()
-        vbox.addLayout(hbox0a)
-        vbox.addLayout(hbox_xs)
-        vbox.addLayout(hbox_ys)
-        vbox.addLayout(hbox_zs)
-        vbox.addLayout(hbox3)
-        vbox.addLayout(hbox4)
-        vbox.addLayout(hbox5)
-        vbox.addLayout(hbox6)
-        vbox.addStretch(1)
+        vbox = make_VBox([hbox0a,hbox_xs,hbox_ys,hbox_zs,
+            hbox3, hbox4, hbox5, hbox6, 1])
 
-        contentbox = QtGui.QHBoxLayout()
-        contentbox.addWidget(self.label) #hologram image
-        contentbox.addLayout(vbox)
+        #top box with hologram image and controls off to the right
+        contentbox = make_HBox([self.label,vbox])
 
-        textbox = QtGui.QVBoxLayout()
-        textbox.addWidget(spheretitle)
-        textbox.addWidget(self.sphObject)
-        textbox.addStretch(1)
-        textbox.addWidget(self.schemaObject)
+        textbox = make_VBox([spheretitle, self.sphObject, 1, self.schemaObject])
 
-        schemacontrol.addWidget(width)
-        schemacontrol.addWidget(self.widthText)
-        schemacontrol.addWidget(height)
-        schemacontrol.addWidget(self.heightText)
-        schemacontrol.addWidget(wave)
-        schemacontrol.addWidget(self.waveText)
-        schemacontrol.addWidget(mindex)
-        schemacontrol.addWidget(self.mindexText)
-        schemacontrol.addWidget(pxsize)
-        schemacontrol.addWidget(self.pxsizeText)
-        schemacontrol.addStretch(1)
+        schemacontrol = make_HBox([width, self.widthText, height, self.heightText, wave, self.waveText,
+            mindex, self.mindexText, pxsize, self.pxsizeText, 1])
 
-        largevbox = QtGui.QVBoxLayout()
-        largevbox.addLayout(contentbox)
-        largevbox.addLayout(schemacontrol)
-        largevbox.addStretch(1)
-        largevbox.addLayout(textbox)
+        #master layout
+        largevbox = make_VBox([contentbox, schemacontrol, 1, textbox])
         
         self.setLayout(largevbox)
         self.setWindowTitle('Interactive Hologram')    

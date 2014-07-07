@@ -111,6 +111,6 @@ for filename in glob.glob("*.cubin"):
   os.remove(filename)
 
 gpuMie.compile()
-"""for filename in glob.glob("*.cubin"):
+for filename in glob.glob("*.cubin"):
   binfile=filename
-  os.rename(binfile, "precompiled.cubin")"""
+  os.rename(binfile, "precompiled.cubin")
