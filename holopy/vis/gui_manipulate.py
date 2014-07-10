@@ -61,22 +61,59 @@ class Holo(QtGui.QWidget):
 
     def initUI(self):
 
-        #main image
-        self.label = QtGui.QLabel(self)
-        self.label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
+        QtAlignmentLookup = {}
+        QtAlignmentLookup['top'] = QtCore.Qt.AlignTop
+        QtAlignmentLookup['bottom'] = QtCore.Qt.AlignBottom
+        QtAlignmentLookup['center'] = QtCore.Qt.AlignCenter
+        QtAlignmentLookup['left'] = QtCore.Qt.AlignLeft
+        QtAlignmentLookup['right'] = QtCore.Qt.AlignRight
+
+        def make_label(text, wordwrap=True, bold=False, height=None,
+                       h_align=None, v_align=None, selectable=None):
+            label = QtGui.QLabel()
+            label.setText(text)
+            if wordwrap:
+                label.setWordWrap(True)
+            if bold:
+                label.setStyleSheet('font-weight:bold')
+            if height:
+                label.setFixedHeight(height)
+            if h_align:
+                if not isinstance(h_align, QtCore.Qt.AlignmentFlag):
+                    align = QtAlignmentLookup[h_align]
+                label.setAlignment(align)
+            if v_align:
+                if not isinstance(v_align, QtCore.Qt.AlignmentFlag):
+                    align = QtAlignmentLookup[v_align]
+                label.setAlignment(align)
+            if selectable == True:
+                label.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+
+            return label
+
+
+        def make_lcd(geometry=None,display_value=None,minSize=None,style=None,css=None):
+            lcd = QtGui.QLCDNumber()
+            if geometry:
+                lcd.setGeometry(geometry[0],geometry[1],geometry[2],geometry[3])
+            if display_value:
+                lcd.display(display_value)
+            if minSize:
+                lcd.setMinimumSize(minSize[0],minSize[1])
+            if style:
+                lcd.setSegmentStyle(QtGui.QLCDNumber.Flat)
+            if css:
+                lcd.setStyleSheet('color:black')
+            return lcd
+
 
         #to display syntax of sphere and schema
-        spheretitle = QtGui.QLabel()
-        spheretitle.setText('HoloPy Scatterer Syntax:')
-        spheretitle.setStyleSheet('font-weight:bold')
-        spheretitle.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeft)
+        spheretitle = make_label('HoloPy Scatterer Syntax',bold=True,h_align='left',v_align='bottom')
+        self.sphObject = make_label('place holder', h_align='left', v_align='bottom',selectable=True)
+        self.schemaObject = make_label('place holder', h_align='left',v_align='bottom',selectable=True)
 
-        self.sphObject = QtGui.QLabel(self)
-        self.sphObject.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeft)
-        self.sphObject.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-        self.schemaObject = QtGui.QLabel(self)
-        self.schemaObject.setWordWrap(True)
-        self.schemaObject.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+        #main image
+        self.label = make_label('',h_align='left',v_align='top')
 
         self.lastZ=0
         self.lastholo=2
@@ -106,44 +143,39 @@ class Holo(QtGui.QWidget):
         self.maxz_diameters = 398 #actually the range, two less than the maximum, in units of radii
 
         #schema adjustment controls
-        width = QtGui.QLabel(self)
-        width.setText('Width (px):')
+        width = make_label('Width (px):')
         self.widthText = QtGui.QLineEdit(self)
         self.widthText.setText('256')
         self.widthText.setFixedWidth(80)
         self.widthText.textChanged.connect(self.rangeChange2)
         self.widthText.textChanged.connect(self.calculateHologram)
 
-        height = QtGui.QLabel(self)
-        height.setText('Height (px):')
+        height = make_label('Height (px):')
         self.heightText = QtGui.QLineEdit(self)
         self.heightText.setText('256')
         self.heightText.setFixedWidth(80)
         self.heightText.textChanged.connect(self.rangeChange2)
         self.heightText.textChanged.connect(self.calculateHologram)
 
-        wave = QtGui.QLabel(self)
-        wave.setText('Wavelength:')
+        wave = make_label('Wavelength:')
         self.waveText = QtGui.QLineEdit(self)
         self.waveText.setText('.660')
         self.waveText.setFixedWidth(80)
         self.waveText.textChanged.connect(self.inmedChange)
         self.waveText.textChanged.connect(self.calculateHologram)
 
-        mindex = QtGui.QLabel(self)
-        mindex.setText('Medium  Index:')
+        mindex = make_label('Medium  Index:')
         self.mindexText = QtGui.QLineEdit(self)
         self.mindexText.setText('1.33')
         self.mindexText.setFixedWidth(80)
         self.mindexText.textChanged.connect(self.inmedChange)
         self.mindexText.textChanged.connect(self.calculateHologram)
 
-        pxsize = QtGui.QLabel(self)
-        pxsize.setText('Pixel Spacing:')
+        pxsize = make_label('Pixel Spacing:')
         self.pxsizeText = QtGui.QLineEdit(self)
         self.pxsizeText.setText('0.1')
         self.pxsizeText.setFixedWidth(80)
-        self.scale = float(self.pxsizeText.text()) #to be used setting up sliders and lcd's
+        self.scale = float(self.pxsizeText.text())
         self.pxsizeText.textChanged.connect(self.rangeChange)
         self.pxsizeText.textChanged.connect(self.calculateHologram)
 
@@ -161,18 +193,9 @@ class Holo(QtGui.QWidget):
 
 
         #sphere parameter adjustment controls
-        x = QtGui.QLabel(self)
-        x.setText('x')
-        x.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignCenter)
-
-        self.lcd = QtGui.QLCDNumber(self)
-        self.lcd.setGeometry(470,10,100,30)
-        self.lcd.setMinimumSize(1,30)
-        self.lcd.setSegmentStyle(QtGui.QLCDNumber.Flat)
-        self.lcd.setStyleSheet('color: black')
-
+        x = make_label('x', h_align='center',v_align='center')
         start = 10
-        self.lcd.display(start)
+        self.lcd = make_lcd([470,10,100,30],display_value=start,minSize=[1,30],style=True,css=True)
 
         self.sld = QtGui.QSlider(QtCore.Qt.Horizontal,self)
         self.sld.setGeometry(470,40,100,30)
@@ -185,17 +208,8 @@ class Holo(QtGui.QWidget):
         self.sld.sliderPressed.connect(self.activate)
 
 
-        y = QtGui.QLabel(self)
-        y.setText('y')
-        y.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignCenter)
-
-        self.lcd2 = QtGui.QLCDNumber(self)
-        self.lcd2.setGeometry(470, 80,100,30)
-        self.lcd2.setMinimumSize(1,30)
-        self.lcd2.display(start)
-        self.lcd2.setSegmentStyle(QtGui.QLCDNumber.Flat)
-        self.lcd2.setStyleSheet('color: black')
-
+        y = make_label('y', h_align='center',v_align='center')
+        self.lcd2 = make_lcd([470,80,100,30],display_value=start,minSize=[1,30],style=True,css=True)
 
         self.sld2 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         self.sld2.setGeometry(470,110,100,30)
@@ -208,18 +222,9 @@ class Holo(QtGui.QWidget):
         self.sld2.sliderPressed.connect(self.activate)
 
 
-        radius = QtGui.QLabel(self)
-        radius.setText('radius')
-        radius.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignCenter)
-
+        radius = make_label('radius', h_align='center',v_align='center')
         start = .5
-        self.lcd4 = QtGui.QLCDNumber(self)
-        self.lcd4.setGeometry(470, 220,100,30)
-        self.lcd4.display(start)
-        self.lcd4.setMinimumSize(1,30)
-        self.lcd4.setSegmentStyle(QtGui.QLCDNumber.Flat)
-        self.lcd4.setStyleSheet('color: black')
-
+        self.lcd4 = make_lcd([470,220,100,30],display_value=start,minSize=[1,30],style=True,css=True)
 
         self.sld4 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         self.sld4.setGeometry(470,250,100,30)
@@ -234,17 +239,9 @@ class Holo(QtGui.QWidget):
         self.sld4.sliderPressed.connect(self.activate)
 
 
-        z = QtGui.QLabel(self)
-        z.setText('z')
-        z.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignCenter)
-
+        z = make_label('z', h_align='center',v_align='center')
         start = 30
-        self.lcd3 = QtGui.QLCDNumber(self)
-        self.lcd3.setGeometry(470,150,100,30)
-        self.lcd3.display(15)
-        self.lcd3.setMinimumSize(1,30)
-        self.lcd3.setSegmentStyle(QtGui.QLCDNumber.Flat)
-        self.lcd3.setStyleSheet('color: black')
+        self.lcd3 = make_lcd([470,150,100,30],display_value=15,minSize=[1,30],style=True,css=True)
 
         self.sld3 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
 
@@ -263,17 +260,10 @@ class Holo(QtGui.QWidget):
 
 
         #index goes from 1.00 to 3.00
-        index = QtGui.QLabel(self)
-        index.setText('index')
-        index.setWordWrap(True)
-        index.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignCenter)
-
+        index = make_label('index', h_align='center',v_align='center')
         start = 1.6
-        self.lcd5 = QtGui.QLCDNumber(self)
-        self.lcd5.setGeometry(470,290,100,30)
-        self.lcd5.display(1.60)
-        self.lcd5.setMinimumSize(1,30)
-        self.lcd5.setSegmentStyle(QtGui.QLCDNumber.Flat)
+        self.lcd5 = make_lcd([470,290,100,30],display_value=start,minSize=[1,30],style=True,css=True)
+
         self.sld5 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         self.sld5.setGeometry(470,320,100,30)
         self.sld5.setMinimum(0)
@@ -287,18 +277,9 @@ class Holo(QtGui.QWidget):
 
 
         #sphere parameter adjustment controls
-        self.x2 = QtGui.QLabel(self)
-        self.x2.setText('x2')
-        self.x2.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignCenter)
-
-        self.lcd7 = QtGui.QLCDNumber(self)
-        self.lcd7.setGeometry(470,10,100,30)
-        self.lcd7.setMinimumSize(1,30)
-        self.lcd7.setSegmentStyle(QtGui.QLCDNumber.Flat)
+        self.x2 = make_label('x2', h_align='center',v_align='center')
         start = 120
-        self.lcd7.display(start*self.scale)
-        self.lcd7.setStyleSheet('color: black')
-
+        self.lcd7 = make_lcd([470,10,100,30],display_value=start*self.scale,minSize=[1,30],style=True,css=True)
 
         self.sld7 = QtGui.QSlider(QtCore.Qt.Horizontal,self)
         self.sld7.setGeometry(470,40,100,30)
@@ -311,17 +292,8 @@ class Holo(QtGui.QWidget):
         self.sld7.sliderPressed.connect(self.activate)
 
 
-        self.y2 = QtGui.QLabel(self)
-        self.y2.setText('y2')
-        self.y2.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignCenter)
-
-        self.lcd8 = QtGui.QLCDNumber(self)
-        self.lcd8.setGeometry(470, 80,100,30)
-        self.lcd8.setMinimumSize(1,30)
-        self.lcd8.display(start*self.scale)
-        self.lcd8.setSegmentStyle(QtGui.QLCDNumber.Flat)
-        self.lcd8.setStyleSheet('color: black')
-
+        self.y2 = make_label('y2', h_align='center',v_align='center')
+        self.lcd8 = make_lcd([470,80,100,30],display_value=start*self.scale,minSize=[1,30],style=True,css=True)
 
         self.sld8 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         self.sld8.setGeometry(470,110,100,30)
@@ -334,18 +306,9 @@ class Holo(QtGui.QWidget):
         self.sld8.sliderPressed.connect(self.activate)
 
 
-        self.z2 = QtGui.QLabel(self)
-        self.z2.setText('z2')
-        self.z2.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignCenter)
-
+        self.z2 = make_label('z2', h_align='center',v_align='center')
         start = 35
-        self.lcd9 = QtGui.QLCDNumber(self)
-        self.lcd9.setGeometry(470,150,100,30)
-        self.lcd9.display(35)
-        self.lcd9.setMinimumSize(1,30)
-        self.lcd9.setSegmentStyle(QtGui.QLCDNumber.Flat)
-        self.lcd9.setStyleSheet('color: black')
-
+        self.lcd9 = make_lcd([470,140,100,30],display_value=35,minSize=[1,30],style=True,css=True)
 
         self.sld9 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         self.sld9.setGeometry(470,180,100,30)
@@ -360,9 +323,7 @@ class Holo(QtGui.QWidget):
 
 
         #calculation timer
-        self.timer = QtGui.QLabel(self)
-        self.timer.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignCenter)
-
+        self.timer = make_label(' ', h_align='center',v_align='bottom')
 
         #scattering theories
         self.gpu = QtGui.QPushButton('GPU Mie', self)
@@ -476,6 +437,9 @@ class Holo(QtGui.QWidget):
         QtGui.QShortcut(QtGui.QKeySequence("Ctrl+q"), self, self.close)
         QtGui.QShortcut(QtGui.QKeySequence("Ctrl+w"), self, self.close)
 
+    #######################
+    # logical connections
+    #######################
 
     def resetLayout(self):
         #sets geometry of window and shows/hides buttons for 
@@ -570,18 +534,19 @@ class Holo(QtGui.QWidget):
 
         if sender == self.sld:
             self.lcd.display(round(value*scale,2))
-            #self.lcd.display(round(value*scale*float(self.heightText.text())/256.,2))
 
         if sender == self.sld2:
             self.lcd2.display(round(value*scale,2))
-        if sender == self.sld3:
-            self.lcd3.display(value/(1.0*self.sld3.maximum())*(round(self.maxz_diameters*self.lcd4.value(),1))+round(2*self.lcd4.value(),1))#z
 
         if sender == self.sld7:
             self.lcd7.display(round(value*scale,2))
 
         if sender == self.sld8:
             self.lcd8.display(round(value*scale,2))
+
+
+        if sender == self.sld3:
+            self.lcd3.display(value/(1.0*self.sld3.maximum())*(round(self.maxz_diameters*self.lcd4.value(),1))+round(2*self.lcd4.value(),1))#z
 
         if sender == self.sld9:
             self.lcd9.display(value/(1.0*self.sld9.maximum())*(round(self.maxz_diameters*self.lcd4.value(),1))+round(2*self.lcd4.value(),1))#z
@@ -618,7 +583,6 @@ class Holo(QtGui.QWidget):
         self.sld.setMaximum(float(self.heightText.text()))
         self.sld2.setMaximum(float(self.widthText.text()))
 
-        #sender = self.sender()
         if sender == self.heightText and self.lcd.value() < float(self.heightText.text())*float(self.pxsizeText.text()):
                 self.sld.setSliderPosition((self.lcd.value()/float(self.pxsizeText.text())))
 
@@ -627,16 +591,12 @@ class Holo(QtGui.QWidget):
 
 
     def slideZ(self, sphere, schema): 
-        #using reconstructions-- better to use electric field?
         '''
-        When z is changed, instead of recomputing the hologram, we
-        use the shortcut of reconstructing the last computed hologram.
+        When z is changed, and reconstruction is selected, do reconstruction.
         '''
         if sphere.parameters == self.oldReconParameters and repr(schema) == repr(self.oldReconSchema):
             self.holo = self.oldReconHolo
         else:
-            source = self.sender()
-
             start = time.time()
 
             if self.lastZ == self.lcd3.value():
@@ -663,7 +623,7 @@ class Holo(QtGui.QWidget):
             index = float(self.mindexText.text()), polarization = [1.0,0.0]))
         self.schemaObject.setText(str(repr(schema)))
 
-        #fist sphere is general for both single sphere and two sphere cases
+        #first sphere is general for both single sphere and two sphere cases
         sphere = Sphere(n = self.lcd5.value()+.0001j, 
             r = self.lcd4.value(), 
             center = (self.lcd.value(),self.lcd2.value(),self.lcd3.value()))
@@ -681,7 +641,7 @@ class Holo(QtGui.QWidget):
             if self.onesphere.checkState() == 2:
                 self.sphObject.setText(repr(sphere))
 
-            #we have two theories to choose from for computing single sphere holograms
+                #we have two theories to choose from for computing single sphere holograms
                 if sphere.parameters != self.oldscattererparameters:
                     #when changing parameters, always use GPU because it's fast enough
                     self.gpu.toggle()
@@ -710,7 +670,7 @@ class Holo(QtGui.QWidget):
                         self.oldschema = schema
 
             else:
-            #we have three theories to choose from for computing single sphere holograms
+                #we have three theories to choose from for computing single sphere holograms
                 s1 = sphere
                 s2 = Sphere(n = self.lcd5.value()+.0001j, 
                     r = self.lcd4.value(), 
@@ -787,7 +747,6 @@ class Holo(QtGui.QWidget):
             self.timer.setText('Calc. Time: '+str(round(end-start,4))+' s')
         else:
             self.timer.setText('')
-        self.timer.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignCenter)
 
         if self.lcd3.value()<2*self.lcd4.value() or self.lcd9.value()<2*self.lcd4.value():
             self.warning.setText('z < sphere diameter')
